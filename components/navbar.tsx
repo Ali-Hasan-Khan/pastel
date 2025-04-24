@@ -2,6 +2,13 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
 import Image from "next/image"
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs"
 
 export default function Navbar() {
   return (
@@ -42,17 +49,25 @@ export default function Navbar() {
 
         <div className="flex items-center space-x-4">
           <ThemeToggle />
-          <Button
-            variant="ghost"
-            className="text-[#8a7a9b] hover:text-[#6b5c7c] hover:bg-[#f0e8f7] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] dark:hover:bg-[#3a2d4f]"
-          >
-            Log In
-          </Button>
-          <Button className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl">
-            Sign Up
-          </Button>
+          <SignedOut>
+            <SignInButton>
+              <Button
+                variant="ghost"
+                className="text-[#8a7a9b] hover:text-[#6b5c7c] hover:bg-[#f0e8f7] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] dark:hover:bg-[#3a2d4f]">
+                Log In
+              </Button>
+            </SignInButton>
+            <SignUpButton>
+              <Button className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl">
+                Sign Up
+              </Button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
-      </div>
-    </header>
+      </div >
+    </header >
   )
 }
