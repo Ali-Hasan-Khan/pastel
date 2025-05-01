@@ -124,7 +124,7 @@ export default function ArchivePage() {
                     </h3>
                     <div className="flex items-center gap-1 text-sm text-[#8a7a9b] dark:text-[#a99bc1]">
                       <Calendar className="w-4 h-4" />
-                      <span>Opened {new Date(memory.openedDate).toLocaleDateString()}</span>
+                      <span>Opened {new Date(memory.openedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                     </div>
                   </div>
                   <MailOpen className="w-5 h-5 text-[#c4a9db] dark:text-[#9f7fc0]" />

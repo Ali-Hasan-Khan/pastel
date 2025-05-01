@@ -72,7 +72,7 @@ export default function DashboardLayout({
       <main className="lg:pl-72">
         <header className="sticky top-0 z-40 bg-white/80 dark:bg-[#1f1a2e]/90 backdrop-blur-md border-b border-[#e9dff5] dark:border-[#3a2d4f]">
           <div className="flex items-center justify-between px-4 py-4">
-            <div className="lg:hidden">
+            <div className="hidden">
               <Image src="/logo.png" alt="Pastel" width={40} height={40} />
             </div>
             <div className="flex items-center space-x-4 ml-auto">
@@ -96,11 +96,12 @@ export default function DashboardLayout({
 function SidebarContent({ pathname }: { pathname: string }) {
   return (
     <>
-      <Link href="/" className="flex items-center px-6 pt-6 pb-8">
+      <Link href="/" className="hidden md:flex items-center px-6 pt-6 pb-8">
         <Image src="/logo.png" alt="Pastel" width={40} height={40} className="flex-shrink-0" />
         <span className="text-xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] ml-3">Pastel</span>
       </Link>
-      <div className="px-4">
+      <div className="flex md:hidden h-16"></div>
+      <div className="px-0 md:px-4">
         {navigation.map((item) => {
           const isActive = pathname === item.href
           const isDashboard = item.name === "Dashboard"

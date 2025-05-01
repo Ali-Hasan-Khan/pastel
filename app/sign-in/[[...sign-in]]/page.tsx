@@ -27,27 +27,27 @@ export default function Page() {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 pt-32 pb-16">
-        <div className="max-w-md mx-auto">
-          <div className="p-8">
-            <h1 className="text-2xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-6 text-center">
-              Welcome Back
-            </h1>
-            <SignIn
-              appearance={{
-                elements: {
-                  rootBox: "w-full",
-                  card: "bg-transparent shadow-none p-0",
-                  headerTitle: "hidden",
-                  headerSubtitle: "hidden",
-                  socialButtonsBlockButton: "bg-[#f0e8f7] dark:bg-[#3a2d4f] hover:bg-[#e2d5f0] dark:hover:bg-[#4a3d5f] border-none text-[#6b5c7c] dark:text-[#d8c5f0]",
-                  formButtonPrimary: "bg-[#c4a9db] hover:bg-[#b397d0] dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl",
-                  formFieldInput: "rounded-xl border-[#e9dff5] dark:border-[#3a2d4f] bg-white dark:bg-[#251c36] text-[#6b5c7c] dark:text-[#d8c5f0]",
-                  formFieldLabel: "text-[#8a7a9b] dark:text-[#a99bc1]",
-                  footerActionLink: "text-[#c4a9db] hover:text-[#b397d0] dark:text-[#9f7fc0] dark:hover:text-[#8a6aad]",
-                }
-              }}
-            />
+      <div className="container mx-auto px-4 pt-24 sm:pt-32 pb-16">
+        <div className="max-w-md mx-auto w-full">
+          <div className="p-1 sm:p-8">
+        <h1 className="text-xl sm:text-2xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-4 sm:mb-6 text-center">
+          Welcome Back
+        </h1>
+        <SignIn
+          appearance={{
+            elements: {
+          rootBox: "w-full",
+          card: "bg-transparent shadow-none p-0",
+          headerTitle: "hidden",
+          headerSubtitle: "hidden",
+          socialButtonsBlockButton: "bg-[#f0e8f7] dark:bg-[#3a2d4f] hover:bg-[#e2d5f0] dark:hover:bg-[#4a3d5f] border-none text-[#6b5c7c] dark:text-[#d8c5f0] text-sm sm:text-base",
+          formButtonPrimary: "bg-[#c4a9db] hover:bg-[#b397d0] dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl text-sm sm:text-base",
+          formFieldInput: "rounded-xl border-[#e9dff5] dark:border-[#3a2d4f] bg-white dark:bg-[#251c36] text-[#6b5c7c] dark:text-[#d8c5f0] text-sm sm:text-base",
+          formFieldLabel: "text-[#8a7a9b] dark:text-[#a99bc1] text-sm sm:text-base",
+          footerActionLink: "text-[#c4a9db] hover:text-[#b397d0] dark:text-[#9f7fc0] dark:hover:text-[#8a6aad] text-sm sm:text-base",
+            }
+          }}
+        />
           </div>
         </div>
       </div>

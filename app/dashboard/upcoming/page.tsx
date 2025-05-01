@@ -67,7 +67,7 @@ export default function UpcomingPage() {
                     <div className="flex items-center gap-1 text-[#8a7a9b] dark:text-[#a99bc1]">
                       <Calendar className="w-4 h-4" />
                       <span>
-                        Opens {new Date(capsule.deliveryDate).toLocaleDateString()}
+                        Opens {new Date(capsule.deliveryDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                       </span>
                     </div>
                     <div className="flex items-center gap-1 text-[#a2d8c0] dark:text-[#7ab5a0]">

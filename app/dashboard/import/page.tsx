@@ -107,7 +107,7 @@ export default function ImportPage() {
                       {file.name}
                     </p>
                     <p className="text-sm text-[#8a7a9b] dark:text-[#a99bc1]">
-                      {new Date(file.date).toLocaleDateString()}
+                      {new Date(file.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </p>
                   </div>
                 </div>
