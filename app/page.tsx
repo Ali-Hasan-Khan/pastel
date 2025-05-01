@@ -6,6 +6,8 @@ import Features from "@/components/features"
 import Testimonials from "@/components/testimonials"
 import Navbar from "@/components/navbar"
 import Pricing from "@/components/pricing"
+import Link from "next/link"
+import { SignedIn, SignedOut } from "@clerk/nextjs"
 
 export default function Home() {
   return (
@@ -22,20 +24,35 @@ export default function Home() {
             Capture the now. Open it later.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-            <Button
-              size="lg"
-              className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg"
-            >
-              Get Started
-              <ChevronRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-[#c4a9db] text-[#6b5c7c] hover:bg-[#f0e8f7] dark:border-[#9f7fc0] dark:text-[#d8c5f0] dark:hover:bg-[#3a2d4f] rounded-xl px-8 py-6 text-lg"
-            >
-              Learn More
-            </Button>
+            <SignedIn>
+              <Link href="/dashboard">
+                <Button
+                  size="lg"
+                  className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
+                >
+                  Go to Dashboard
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </SignedIn>
+            <SignedOut>
+              <Link href="/dashboard">
+                <Button
+                  size="lg"
+                  className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
+                >
+                  Get Started
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-[#c4a9db] text-[#6b5c7c] hover:bg-[#f0e8f7] dark:border-[#9f7fc0] dark:text-[#d8c5f0] dark:hover:bg-[#3a2d4f] rounded-xl px-8 py-6 text-lg"
+              >
+                Learn More
+              </Button>
+            </SignedOut>
           </div>
 
           <div className="relative mx-auto max-w-2xl">
@@ -83,20 +100,35 @@ export default function Home() {
             Start preserving your memories and emotions for your future self to rediscover.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button
-              size="lg"
-              className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg"
-            >
-              Get Started
-              <ChevronRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-[#c4a9db] text-[#6b5c7c] hover:bg-[#f0e8f7] dark:border-[#9f7fc0] dark:text-[#d8c5f0] dark:hover:bg-[#3a2d4f] rounded-xl px-8 py-6 text-lg"
-            >
-              Explore Features
-            </Button>
+            <SignedIn>
+              <Link href="/dashboard">
+                <Button
+                  size="lg"
+                  className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
+                >
+                  Go to Dashboard
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </SignedIn>
+            <SignedOut>
+              <Link href="/dashboard">
+                <Button
+                  size="lg"
+                  className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
+                >
+                  Get Started
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-[#c4a9db] text-[#6b5c7c] hover:bg-[#f0e8f7] dark:border-[#9f7fc0] dark:text-[#d8c5f0] dark:hover:bg-[#3a2d4f] rounded-xl px-8 py-6 text-lg"
+              >
+                Explore Features
+              </Button>
+            </SignedOut>
           </div>
         </div>
       </section>
