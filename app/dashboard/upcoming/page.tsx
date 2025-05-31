@@ -6,6 +6,7 @@ import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { Clock, Calendar, Lock } from "lucide-react"
+import { LoadingSpinnerWithText } from "@/components/ui/loading-spinner"
 
 interface Capsule {
   id: string
@@ -54,9 +55,12 @@ export default function UpcomingPage() {
   if (!isLoaded) {
     return (
       <DashboardLayout>
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="max-w-4xl mx-auto space-y-8 mt-24">
           <div className="flex items-center justify-center min-h-[400px]">
-            <div className="text-[#8a7a9b] dark:text-[#a99bc1]">Loading...</div>
+            <LoadingSpinnerWithText 
+              text="Loading your upcoming capsules..." 
+              size="lg"
+            />
           </div>
         </div>
       </DashboardLayout>
@@ -96,8 +100,11 @@ export default function UpcomingPage() {
         </div>
 
         {loading && (
-          <div className="flex items-center justify-center py-12">
-            <div className="text-[#8a7a9b] dark:text-[#a99bc1]">Loading your capsules...</div>
+          <div className="flex items-center justify-center min-h-[400px]">
+            <LoadingSpinnerWithText 
+              text="Loading your upcoming capsules..." 
+              size="lg"
+            />
           </div>
         )}
 

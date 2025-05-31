@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs"
 import { PenLine, Clock, Lock, Send } from "lucide-react"
 import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
+import { LoadingSpinnerWithText } from "@/components/ui/loading-spinner"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
@@ -60,7 +61,10 @@ export default function DashboardPage() {
       <DashboardLayout>
         <div className="space-y-8">
           <div className="flex items-center justify-center min-h-[400px]">
-            <div className="text-[#8a7a9b] dark:text-[#a99bc1]">Loading...</div>
+            <LoadingSpinnerWithText 
+              text="Loading your dashboard..." 
+              size="lg"
+            />
           </div>
         </div>
       </DashboardLayout>
