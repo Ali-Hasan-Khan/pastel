@@ -162,24 +162,24 @@ export default function UpcomingPage() {
                   <p className="text-sm text-[#8a7a9b] dark:text-[#a99bc1] mb-4 line-clamp-2">
                     {capsule.content}
                   </p>
-                  <div className="flex items-center gap-4 text-sm">
-                    <div className="flex items-center gap-1 text-[#8a7a9b] dark:text-[#a99bc1]">
-                      <Calendar className="w-4 h-4" />
-                      <span>
+                  <div className="flex flex-col items-start md:flex-row md:items-center gap-4 text-sm">
+                    <div className="flex items-center gap-1 text-[#8a7a9b] dark:text-[#a99bc1] min-w-0">
+                      <Calendar className="w-5 h-5 md:w-4 md:h-4 flex-shrink-0" />
+                      <div className="whitespace-nowrap">
                         Opens {new Date(capsule.deliveryDate).toLocaleDateString('en-US', { 
                           year: 'numeric', 
                           month: 'long', 
                           day: 'numeric' 
                         })}
-                      </span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1 text-[#a2d8c0] dark:text-[#7ab5a0]">
-                      <Clock className="w-4 h-4" />
-                      <span>
+                    <div className="flex items-center gap-1 text-[#a2d8c0] dark:text-[#7ab5a0] min-w-0">
+                      <Clock className="w-5 h-5 md:w-4 md:h-4 flex-shrink-0" />
+                      <div className="whitespace-nowrap">
                         {capsule.remainingDays === 1 
                           ? "1 day remaining" 
                           : `${capsule.remainingDays} days remaining`}
-                      </span>
+                      </div>
                     </div>
                   </div>
                 </div>

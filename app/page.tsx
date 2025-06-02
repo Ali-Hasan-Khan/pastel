@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
 import MemoryPreview from "@/components/memory-preview"
@@ -9,30 +11,72 @@ import Pricing from "@/components/pricing"
 import Link from "next/link"
 import Image from "next/image"
 import { SignedIn, SignedOut } from "@clerk/nextjs"
-
+import SplitText from "@/components/ui/animations/splittext"
+import SplashCursor from "@/components/ui/animations/splashcursor"
 export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-b from-[#f9f5f2] to-[#f5f0f9] dark:from-[#1f1a2e] dark:to-[#2a1e3f] transition-colors duration-300">
+    <div className="min-h-screen bg-linear-to-b from-[#f9f5f2] to-[#f5f0f9] dark:from-[#1f1a2e] dark:to-[#2a1e3f] transition-colors duration-300 relative overflow-hidden">
+      
+      <SplashCursor
+        SIM_RESOLUTION={128}
+        DYE_RESOLUTION={1440}
+        CAPTURE_RESOLUTION={512}
+        DENSITY_DISSIPATION={5}
+        VELOCITY_DISSIPATION={2}
+        PRESSURE={0.1}
+        PRESSURE_ITERATIONS={20}
+        CURL={3}
+        SPLAT_RADIUS={0.2}
+        SPLAT_FORCE={6000}
+        SHADING={true}
+        COLOR_UPDATE_SPEED={10}
+        BACK_COLOR={{ r: 1, g: 1, b: 1 }}
+        TRANSPARENT={true}
+       />
       <Navbar />
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-20 pb-16 md:pt-32 md:pb-24 text-center">
         <div className="max-w-3xl mx-auto">
-          <h1 className="mt-6 sm:mt-0 text-4xl md:text-5xl lg:text-6xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-6 leading-tight">
-            A gentle space to preserve your past, for the future.
-          </h1>
-          <p className="text-xl md:text-2xl text-[#8a7a9b] dark:text-[#a99bc1] mb-10">
-            Capture the now. Open it later.
-          </p>
+          <div className="flex flex-col items-center">
+            <SplitText
+              text="A gentle space to preserve your past, for the future."
+              className="mt-6 sm:mt-0 text-4xl md:text-5xl lg:text-6xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-6 leading-tight"
+              delay={100}
+              duration={0.6}
+              ease="power3.out"
+              splitType="lines"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+            />
+            <SplitText
+              text="Capture the now. Open it later."
+              className="text-xl md:text-2xl text-[#8a7a9b] dark:text-[#a99bc1] mb-10"
+              delay={100}
+              duration={0.6}
+              splitType="lines"
+            />
+          </div>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
             <SignedIn>
               <Link href="/dashboard">
                 <Button
                   size="lg"
-                  className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
+                  className="group relative bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-500 hover:shadow-xl hover:shadow-[#c4a9db]/25 hover:-translate-y-0.5 w-full sm:w-auto overflow-hidden"
                 >
-                  Go to Dashboard
-                  <ChevronRight className="ml-2 h-5 w-5" />
+                  {/* Subtle shimmer effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+                  
+                  {/* Gentle glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8f7]/20 to-[#e9f5f0]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  <span className="relative z-10 transition-transform duration-300 group-hover:scale-105">
+                    Go to Dashboard
+                  </span>
+                  <ChevronRight className="ml-2 h-5 w-5 relative z-10 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110" />
                 </Button>
               </Link>
             </SignedIn>
@@ -53,7 +97,7 @@ export default function Home() {
               >
                 Learn More
               </Button>
-            </SignedOut>
+            </SignedOut>  
           </div>
 
           <div className="relative mx-auto max-w-2xl">
@@ -105,10 +149,18 @@ export default function Home() {
               <Link href="/dashboard">
                 <Button
                   size="lg"
-                  className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
+                  className="group relative bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-500 hover:shadow-xl hover:shadow-[#c4a9db]/25 hover:-translate-y-0.5 w-full sm:w-auto overflow-hidden"
                 >
-                  Go to Dashboard
-                  <ChevronRight className="ml-2 h-5 w-5" />
+                  {/* Subtle shimmer effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+                  
+                  {/* Gentle glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8f7]/20 to-[#e9f5f0]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  <span className="relative z-10 transition-transform duration-300 group-hover:scale-105">
+                    Go to Dashboard
+                  </span>
+                  <ChevronRight className="ml-2 h-5 w-5 relative z-10 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110" />
                 </Button>
               </Link>
             </SignedIn>
@@ -218,6 +270,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
     </div>
   )
 }
