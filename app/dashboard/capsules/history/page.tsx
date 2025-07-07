@@ -5,27 +5,29 @@ import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { MailOpen, Calendar, MessageSquare, Download } from "lucide-react"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+
+interface Capsule {
+    id: string
+    title: string
+    content: string
+    deliveryDate: string
+    openedDate: string
+    aiReflection: string
+}
 
 export default function HistoryPage() {
     // This would come from your API in a real app
-    const pastCapsules = [
-        {
-            id: "1",
-            title: "Reflections on 2024",
-            content: "Looking back at the year that was...",
-            deliveryDate: "2025-01-01",
-            openedDate: "2025-01-01",
-            aiReflection: "Your writing shows significant personal growth...",
-        },
-        {
-            id: "2",
-            title: "Pre-graduation thoughts",
-            content: "My hopes and fears before graduating...",
-            deliveryDate: "2024-12-15",
-            openedDate: "2024-12-15",
-            aiReflection: "There's a strong sense of anticipation...",
-        },
-    ]
+    const [pastCapsules, setPastCapsules] = useState<Capsule[]>([])
+    useEffect(() => {
+        const fetchCapsules = async () => {
+            const response = await fetch('/api/capsules/delivered')
+            const data = await response.json()
+            setPastCapsules(data)
+        }
+        fetchCapsules()
+    }, [])
+    
 
     return (
         <DashboardLayout>

@@ -9,12 +9,28 @@ datasource db {
 }
 
 model Capsule {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   title        String
   content      String
   deliveryDate DateTime
   userId       String
-  status       String   @default("scheduled")
-  images       String[] // Array of image URLs/paths
-  createdAt    DateTime @default(now())
-} 
+  status       String    @default("scheduled")
+  createdAt    DateTime  @default(now())
+  deliveredAt  DateTime?
+  images       String[]
+
+  @@index([deliveryDate, status])
+}
+
+model DeliveryLog {
+  id          String   @id
+  capsuleId   String
+  userId      String
+  status      String
+  method      String
+  error       String?
+  attemptedAt DateTime @default(now())
+
+  @@index([attemptedAt])
+  @@index([capsuleId])
+}

@@ -1,37 +1,147 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useUser } from "@clerk/nextjs"
+import { useParams } from "next/navigation"
 import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { Lock, Calendar, Clock, MessageSquare, ArrowLeft, Download, Share2 } from "lucide-react"
 import Link from "next/link"
+import { LoadingSpinnerWithText } from "@/components/ui/loading-spinner"
 
-interface PageProps {
-    // use promise
-    params: Promise<{ id: string }>;
+interface Capsule {
+    id: string
+    title: string
+    content: string
+    deliveryDate: string
+    status: string
+    images: string[]
+    createdAt: string
+    deliveredAt?: string
+    aiReflection?: string
 }
 
-export default async function CapsulePage({ params }: PageProps) {
-    // This would come from your API in a real app
-    const resolvedParams = await params
-    const capsule = {
-        id: resolvedParams.id,
-        title: "Letter to future me",
-        content: `Dear Future Me,
+export default function CapsulePage() {
+    const [capsule, setCapsule] = useState<Capsule | null>(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState("")
+    const { isLoaded, isSignedIn } = useUser()
+    const params = useParams()
+    const id = params.id as string
 
-I'm writing this on a quiet Sunday morning, thinking about where I want to be in a year. There's so much uncertainty right now, but also so much possibility.
+    useEffect(() => {
+        if (isLoaded && isSignedIn && id) {
+            fetchCapsule()
+        } else if (isLoaded && !isSignedIn) {
+            setLoading(false)
+        }
+    }, [isLoaded, isSignedIn, id])
 
-I hope by the time you read this, some of those dreams we've been working on have started to take shape. Remember how nervous we were about taking that leap? I wonder if it paid off.
+    const fetchCapsule = async () => {
+        try {
+            setLoading(true)
+            setError("")
+            const response = await fetch(`/api/capsules/${id}`)
+            
+            if (!response.ok) {
+                if (response.status === 404) {
+                    setError("Capsule not found")
+                } else {
+                    setError("Failed to fetch capsule")
+                }
+                return
+            }
+            
+            const data = await response.json()
+            setCapsule(data)
+        } catch (err) {
+            setError("Network error occurred")
+        } finally {
+            setLoading(false)
+        }
+    }
 
-Keep growing, keep learning, and don't forget to take care of yourself.
+    // Show loading state while Clerk loads
+    if (!isLoaded) {
+        return (
+            <DashboardLayout>
+                <div className="max-w-4xl mx-auto space-y-8">
+                    <div className="flex items-center justify-center min-h-[400px]">
+                        <LoadingSpinnerWithText
+                            text="Loading your capsule..."
+                            size="lg"
+                        />
+                    </div>
+                </div>
+            </DashboardLayout>
+        )
+    }
 
-With hope,
-Past You`,
-        createdAt: "2024-05-01",
-        deliveryDate: "2025-05-01",
-        status: "locked", // or "unlocked"
-        aiReflection: "Your writing reveals a strong sense of hope and anticipation for the future, balanced with current uncertainties. There's a notable focus on personal growth and self-compassion.",
+    // Show sign-in prompt if not authenticated
+    if (!isSignedIn) {
+        return (
+            <DashboardLayout>
+                <div className="max-w-4xl mx-auto space-y-8">
+                    <div className="flex items-center justify-center min-h-[400px]">
+                        <div className="text-center">
+                            <h2 className="text-2xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
+                                Sign In Required
+                            </h2>
+                            <p className="text-[#8a7a9b] dark:text-[#a99bc1]">
+                                Please sign in to view this capsule.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </DashboardLayout>
+        )
+    }
+
+    // Show loading state while fetching data
+    if (loading) {
+        return (
+            <DashboardLayout>
+                <div className="max-w-4xl mx-auto space-y-8">
+                    <div className="flex items-center justify-center min-h-[400px]">
+                        <LoadingSpinnerWithText
+                            text="Loading capsule..."
+                            size="lg"
+                        />
+                    </div>
+                </div>
+            </DashboardLayout>
+        )
+    }
+
+    // Show error state
+    if (error || !capsule) {
+        return (
+            <DashboardLayout>
+                <div className="max-w-4xl mx-auto space-y-8">
+                    <div className="flex items-center justify-center min-h-[400px]">
+                        <div className="text-center">
+                            <h2 className="text-2xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
+                                {error || "Capsule not found"}
+                            </h2>
+                            <p className="text-[#8a7a9b] dark:text-[#a99bc1] mb-4">
+                                {error === "Capsule not found" 
+                                    ? "The capsule you're looking for doesn't exist."
+                                    : "Something went wrong while loading this capsule."
+                                }
+                            </p>
+                            <Button
+                                onClick={fetchCapsule}
+                                variant="outline"
+                                className="rounded-xl border-[#e9dff5] dark:border-[#3a2d4f] text-[#8a7a9b] hover:text-[#6b5c7c] hover:bg-[#f0e8f7] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] dark:hover:bg-[#3a2d4f]"
+                            >
+                                Try Again
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </DashboardLayout>
+        )
     }
 
     const isLocked = capsule.status === "locked"
@@ -123,12 +233,27 @@ Past You`,
                                     {capsule.content}
                                 </div>
                             </div>
+                            
+                            {/* Display images if any */}
+                            {capsule.images && capsule.images.length > 0 && (
+                                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {capsule.images.map((image: string, index: number) => (
+                                        <div key={index} className="relative">
+                                            <img
+                                                src={image}
+                                                alt={`Capsule image ${index + 1}`}
+                                                className="w-full h-48 object-cover rounded-lg"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     )}
                 </motion.div>
 
-                {/* AI Reflection */}
-                {!isLocked && (
+                {/* AI Reflection - Only show if capsule has been delivered and has AI reflection */}
+                {!isLocked && capsule.deliveredAt && (
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -142,7 +267,7 @@ Past You`,
                                     AI Reflection
                                 </h3>
                                 <p className="text-[#8a7a9b] dark:text-[#a99bc1]">
-                                    {capsule.aiReflection}
+                                    {capsule.aiReflection || "AI reflection will be available once the capsule is delivered and processed."}
                                 </p>
                             </div>
                         </div>
