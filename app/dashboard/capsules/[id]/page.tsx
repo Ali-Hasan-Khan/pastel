@@ -155,11 +155,11 @@ export default function CapsulePage() {
                 {/* Header */}
                 <div>
                     <Link
-                        href="/dashboard/capsules/history"
+                        href="/dashboard"
                         className="inline-flex items-center text-[#8a7a9b] hover:text-[#6b5c7c] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] mb-6"
                     >
                         <ArrowLeft className="w-4 h-4 mr-2" />
-                        Back to History
+                        Back to Dashboard
                     </Link>
 
                     <motion.div

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { LoadingSpinnerWithText } from "@/components/ui/loading-spinner"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { useRouter } from "next/navigation"
 
 interface DashboardStats {
   totalCapsules: number
@@ -27,7 +28,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const { isLoaded, isSignedIn, user } = useUser()
-
+  const router = useRouter()
   useEffect(() => {
     if (isLoaded && isSignedIn) {
       fetchDashboardStats()
@@ -42,7 +43,7 @@ export default function DashboardPage() {
       setError("")
       const response = await fetch("/api/dashboard/stats")
       const result = await response.json()
-      
+
       if (result.success) {
         setStats(result.data)
       } else {
@@ -61,8 +62,8 @@ export default function DashboardPage() {
       <DashboardLayout>
         <div className="space-y-8">
           <div className="flex items-center justify-center min-h-[400px]">
-            <LoadingSpinnerWithText 
-              text="Loading your dashboard..." 
+            <LoadingSpinnerWithText
+              text="Loading your dashboard..."
               size="lg"
             />
           </div>
@@ -163,7 +164,7 @@ export default function DashboardPage() {
           ) : error ? (
             <div className="col-span-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
               <p className="text-red-600 dark:text-red-400">{error}</p>
-              <Button 
+              <Button
                 onClick={fetchDashboardStats}
                 variant="outline"
                 size="sm"
@@ -210,16 +211,15 @@ export default function DashboardPage() {
               </Link>
             )}
           </div>
-          
+
           <div className="bg-white dark:bg-[#2a1e3f] rounded-xl border border-[#e9dff5] dark:border-[#3a2d4f] overflow-hidden">
             {loading ? (
               // Loading skeleton for recent capsules
               Array.from({ length: 3 }).map((_, i) => (
                 <div
                   key={i}
-                  className={`p-4 animate-pulse ${
-                    i !== 2 ? "border-b border-[#e9dff5] dark:border-[#3a2d4f]" : ""
-                  }`}
+                  className={`p-4 animate-pulse ${i !== 2 ? "border-b border-[#e9dff5] dark:border-[#3a2d4f]" : ""
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -241,33 +241,34 @@ export default function DashboardPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className={`p-4 flex items-center justify-between ${
-                    i !== stats.recentCapsules.length - 1
+                  className={`p-4 flex items-center justify-between ${i !== stats.recentCapsules.length - 1
                       ? "border-b border-[#e9dff5] dark:border-[#3a2d4f]"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div>
                     <h3 className="font-medium text-[#6b5c7c] dark:text-[#d8c5f0]">
                       {capsule.title}
                     </h3>
                     <p className="text-sm text-[#8a7a9b] dark:text-[#a99bc1]">
-                      Delivery: {new Date(capsule.deliveryDate).toLocaleDateString('en-US', { 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
+                      Delivery: {new Date(capsule.deliveryDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
                       })}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      new Date(capsule.deliveryDate) <= new Date()
+                    <span className={`text-xs px-2 py-1 rounded-full ${new Date(capsule.deliveryDate) <= new Date()
                         ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400'
                         : 'bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400'
-                    }`}>
+                      }`}>
                       {new Date(capsule.deliveryDate) <= new Date() ? 'Ready' : 'Scheduled'}
                     </span>
                     <Button
+                      onClick={() => {
+                        router.push(`/dashboard/capsules/${capsule.id}`)
+                      }}
                       variant="ghost"
                       size="sm"
                       className="text-[#8a7a9b] hover:text-[#6b5c7c] hover:bg-[#f0e8f7] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] dark:hover:bg-[#3a2d4f]"

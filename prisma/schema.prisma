@@ -9,15 +9,16 @@ datasource db {
 }
 
 model Capsule {
-  id           String    @id @default(uuid())
+  id           String   @id @default(uuid())
   title        String
   content      String
   deliveryDate DateTime
   userId       String
-  status       String    @default("scheduled")
-  createdAt    DateTime  @default(now())
-  deliveredAt  DateTime?
+  status       String   @default("scheduled")
   images       String[]
+  deliveredAt  DateTime?
+  aiReflection String?   // <-- Add this line
+  createdAt    DateTime @default(now())
 
   @@index([deliveryDate, status])
 }

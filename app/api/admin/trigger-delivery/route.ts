@@ -1,11 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
+import { createClerkClient } from '@clerk/backend'
 import { processPendingDeliveries, retryFailedDeliveries } from '@/lib/services/delivery-service'
+
+const clerkClient = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY })
 
 export async function POST(request: NextRequest) {
   try {
     // Check if user is authenticated and has admin privileges
     const { userId } = await auth()
+    const user = await clerkClient.users.getUser(userId as string)
+
+    if (user.publicMetadata.role !== 'admin') {
+      return NextResponse.json(
+        { error: 'Unauthorized' }, 
+        { status: 401 }
+      )
+    }
     
     if (!userId) {
       return NextResponse.json(
@@ -14,9 +25,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // You might want to add admin role checking here
-    // const user = await clerkClient.users.getUser(userId)
-    // if (!user.publicMetadata.isAdmin) { ... }
 
     const { action } = await request.json()
 

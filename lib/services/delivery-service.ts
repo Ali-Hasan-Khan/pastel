@@ -44,7 +44,7 @@ export async function processPendingDeliveries(): Promise<DeliveryResult> {
         console.error(`Failed to deliver capsule ${capsule.id}:`, error)
         result.failed++
         result.errors.push(`Capsule ${capsule.id}: ${error instanceof Error ? error.message : String(error)}`)
-        
+
         // Log the failure
         await logDeliveryAttempt(capsule.id, capsule.userId, 'failed', 'email', error instanceof Error ? error.message : String(error))
       }
@@ -65,12 +65,21 @@ export async function processPendingDeliveries(): Promise<DeliveryResult> {
   }
 }
 
+async function generateAIReflection(capsuleContent: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/cron/ai-reflections`, {
+    method: 'POST',
+    body: JSON.stringify({ capsuleContent })
+  })
+  const reflection = await response.json()
+  return reflection.data
+}
+
 async function deliverCapsule(capsule: any) {
   try {
     // Get user details from Clerk
     const client = await clerkClient()
     const user = await client.users.getUser(capsule.userId)
-    console.log('user', user)
+    // console.log('user', user)
     const userEmail = user.emailAddresses[0]?.emailAddress
     const userName = user.firstName || user.username || 'Friend'
 
@@ -89,13 +98,18 @@ async function deliverCapsule(capsule: any) {
       throw new Error(`Email delivery failed: ${emailResult.error}`)
     }
 
+    // Generate AI reflection
+    const aiReflection = await generateAIReflection(capsule.content)
+    // console.log('aiReflection', aiReflection)
+
     // Update capsule status
     await prisma.capsule.update({
       where: { id: capsule.id },
       data: {
         status: 'delivered',
         deliveryDate: new Date(),
-        deliveredAt: new Date()
+        deliveredAt: new Date(),
+        aiReflection: aiReflection
       }
     })
 
@@ -118,10 +132,10 @@ async function deliverCapsule(capsule: any) {
 }
 
 async function logDeliveryAttempt(
-  capsuleId: string, 
-  userId: string, 
-  status: string, 
-  method: string, 
+  capsuleId: string,
+  userId: string,
+  status: string,
+  method: string,
   error?: string
 ) {
   try {
@@ -156,7 +170,7 @@ export async function retryFailedDeliveries(): Promise<DeliveryResult> {
       }
     })
 
-    console.log('failedCapsules', failedCapsules)
+    // console.log('failedCapsules', failedCapsules)
 
     for (const capsule of failedCapsules) {
       try {
