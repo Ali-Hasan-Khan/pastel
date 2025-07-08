@@ -70,6 +70,7 @@ async function deliverCapsule(capsule: any) {
     // Get user details from Clerk
     const client = await clerkClient()
     const user = await client.users.getUser(capsule.userId)
+    console.log('user', user)
     const userEmail = user.emailAddresses[0]?.emailAddress
     const userName = user.firstName || user.username || 'Friend'
 
@@ -152,11 +153,10 @@ export async function retryFailedDeliveries(): Promise<DeliveryResult> {
     const failedCapsules = await prisma.capsule.findMany({
       where: {
         status: 'failed',
-        deliveryDate: {
-          lte: new Date()
-        }
       }
     })
+
+    console.log('failedCapsules', failedCapsules)
 
     for (const capsule of failedCapsules) {
       try {

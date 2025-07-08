@@ -2,10 +2,12 @@
 
 import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
+import { useUser } from "@clerk/nextjs"
 import { motion } from "framer-motion"
 import { MailOpen, Calendar, MessageSquare, Download } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { LoadingSpinnerWithText } from "@/components/ui/loading-spinner"
 
 interface Capsule {
     id: string
@@ -19,15 +21,45 @@ interface Capsule {
 export default function HistoryPage() {
     // This would come from your API in a real app
     const [pastCapsules, setPastCapsules] = useState<Capsule[]>([])
+    const [loading, setLoading] = useState(true)
+    const { isLoaded, isSignedIn } = useUser()
+
     useEffect(() => {
-        const fetchCapsules = async () => {
+        if (isLoaded && isSignedIn) {
+            fetchCapsules()
+        } else if (isLoaded && !isSignedIn) {
+            setLoading(false)
+        }
+    }, [isLoaded, isSignedIn])
+    
+    const fetchCapsules = async () => {
+        setLoading(true)
+        try {
             const response = await fetch('/api/capsules/delivered')
             const data = await response.json()
+
             setPastCapsules(data)
+        } catch (error) {
+            console.error('Error fetching capsules:', error)
+        } finally {
+            setLoading(false)
         }
-        fetchCapsules()
-    }, [])
-    
+    }
+
+    if (loading) {
+        return (
+            <DashboardLayout>
+                <div className="max-w-4xl mx-auto space-y-8">
+                    <div className="flex items-center justify-center min-h-[400px]">
+                        <LoadingSpinnerWithText
+                            text="Loading your past capsules..."
+                            size="lg"
+                        />
+                    </div>
+                </div>
+            </DashboardLayout>
+        )
+    }
 
     return (
         <DashboardLayout>
