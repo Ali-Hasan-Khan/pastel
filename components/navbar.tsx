@@ -50,10 +50,10 @@ export default function Navbar() {
           </nav>
         </div>
 
-        <div className="auth-container">
-  <div className="flex items-center space-x-1 mr-2 sm:mr-0 sm:space-x-4">
-    <ThemeToggle />
-    <SignedOut>
+        <div className="w-[180px] flex justify-end">
+          <div className="flex items-center space-x-1 mr-2 sm:mr-0 sm:space-x-4">
+            <ThemeToggle />
+            <SignedOut>
               <SignInButton>
                 <Button
                   variant="ghost"
