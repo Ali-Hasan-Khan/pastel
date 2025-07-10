@@ -25,6 +25,14 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className="!scroll-smooth" suppressHydrationWarning>
+        <head>
+          <link
+            rel="preload"
+            href="/placeholder.png"
+            as="image"
+            type="image/png"
+          />
+        </head>
         <body className={inter.className} suppressHydrationWarning>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}

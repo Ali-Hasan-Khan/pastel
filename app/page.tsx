@@ -18,7 +18,7 @@ export default function Home() {
     <div className="min-h-screen bg-linear-to-b from-[#f9f5f2] to-[#f5f0f9] dark:from-[#1f1a2e] dark:to-[#2a1e3f] transition-colors duration-300 relative overflow-hidden">
 
 
-      <div className="hidden sm:block">
+      <div className="hidden md:block">
         <SplashCursor
           SIM_RESOLUTION={128}
           DYE_RESOLUTION={1440}
@@ -63,54 +63,65 @@ export default function Home() {
               splitType="lines"
             />
           </div>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-            <SignedIn>
-              <Link href="/dashboard">
+          
+          {/* Fixed height container for buttons and image */}
+          <div className="h-[650px] md:h-[1100px] flex flex-col justify-between items-center">
+            {/* Button container with fixed height */}
+            <div className="h-16 flex flex-col sm:flex-row justify-center gap-4 mb-0">
+              <SignedIn>
+                <Link href="/dashboard">
+                  <Button
+                    size="lg"
+                    className="group relative bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-500 hover:shadow-xl hover:shadow-[#c4a9db]/25 hover:-translate-y-0.5 w-full sm:w-auto overflow-hidden"
+                  >
+                    {/* Subtle shimmer effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+
+                    {/* Gentle glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8f7]/20 to-[#e9f5f0]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                    <span className="relative z-10 transition-transform duration-300 group-hover:scale-105">
+                      Go to Dashboard
+                    </span>
+                    <ChevronRight className="ml-2 h-5 w-5 relative z-10 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110" />
+                  </Button>
+                </Link>
+              </SignedIn>
+              <SignedOut>
+                <Link href="/dashboard">
+                  <Button
+                    size="lg"
+                    className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
+                  >
+                    Get Started
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
                 <Button
+                  variant="outline"
                   size="lg"
-                  className="group relative bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-500 hover:shadow-xl hover:shadow-[#c4a9db]/25 hover:-translate-y-0.5 w-full sm:w-auto overflow-hidden"
+                  className="border-[#c4a9db] text-[#6b5c7c] hover:bg-[#f0e8f7] dark:border-[#9f7fc0] dark:text-[#d8c5f0] dark:hover:bg-[#3a2d4f] rounded-xl px-8 py-6 text-lg"
                 >
-                  {/* Subtle shimmer effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-
-                  {/* Gentle glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8f7]/20 to-[#e9f5f0]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  <span className="relative z-10 transition-transform duration-300 group-hover:scale-105">
-                    Go to Dashboard
-                  </span>
-                  <ChevronRight className="ml-2 h-5 w-5 relative z-10 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110" />
+                  Learn More
                 </Button>
-              </Link>
-            </SignedIn>
-            <SignedOut>
-              <Link href="/dashboard">
-                <Button
-                  size="lg"
-                  className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
-                >
-                  Get Started
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-[#c4a9db] text-[#6b5c7c] hover:bg-[#f0e8f7] dark:border-[#9f7fc0] dark:text-[#d8c5f0] dark:hover:bg-[#3a2d4f] rounded-xl px-8 py-6 text-lg"
-              >
-                Learn More
-              </Button>
-            </SignedOut>
-          </div>
+              </SignedOut>
+            </div>
 
-          <div className="relative mx-auto max-w-2xl">
-            <div className="absolute inset-0 bg-[#e2d5f0] dark:bg-[#3a2d4f] rounded-3xl transform rotate-1 translate-x-1 translate-y-1"></div>
-            <div className="relative bg-white dark:bg-[#2a1e3f] rounded-3xl shadow-lg overflow-hidden border border-[#e9dff5] dark:border-[#3a2d4f] p-4">
-              <img
-                src="/placeholder.png?height=500&width=800"
-                alt="Pastel app interface mockup"
-                className="w-full rounded-2xl"
-              />
+            {/* Image container */}
+            <div className="relative mx-auto max-w-2xl w-full">
+              <div className="absolute inset-0 bg-[#e2d5f0] dark:bg-[#3a2d4f] rounded-3xl transform rotate-1 translate-x-1 translate-y-1"></div>
+              <div className="relative bg-white dark:bg-[#2a1e3f] rounded-3xl shadow-lg overflow-hidden border border-[#e9dff5] dark:border-[#3a2d4f] p-4">
+                <Image
+                  src="/placeholder.png"
+                  alt="Pastel app interface mockup"
+                  width={800}
+                  height={500}
+                  priority={true}
+                  className="w-full rounded-2xl"
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                />
+              </div>
             </div>
           </div>
         </div>

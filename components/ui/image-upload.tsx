@@ -4,6 +4,7 @@ import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { ImageIcon, X, Upload } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
 
 interface UploadedImage {
   url: string
@@ -146,7 +147,7 @@ export function ImageUpload({
                 className="relative group"
               >
                 <div className="aspect-square rounded-lg overflow-hidden border border-[#e9dff5] dark:border-[#3a2d4f] bg-[#f9f5f2] dark:bg-[#251c36]">
-                  <img
+                  <Image
                     src={image.url}
                     alt={image.originalName}
                     className="w-full h-full object-cover"

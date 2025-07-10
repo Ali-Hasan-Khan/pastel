@@ -9,6 +9,7 @@ import { motion } from "framer-motion"
 import { Lock, Calendar, Clock, MessageSquare, ArrowLeft, Download, Share2 } from "lucide-react"
 import Link from "next/link"
 import { LoadingSpinnerWithText } from "@/components/ui/loading-spinner"
+import Image from "next/image"
 
 interface Capsule {
     id: string
@@ -239,7 +240,7 @@ export default function CapsulePage() {
                                 <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {capsule.images.map((image: string, index: number) => (
                                         <div key={index} className="relative">
-                                            <img
+                                            <Image
                                                 src={image}
                                                 alt={`Capsule image ${index + 1}`}
                                                 className="w-full h-48 object-cover rounded-lg"
