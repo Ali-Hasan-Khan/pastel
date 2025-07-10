@@ -16,23 +16,26 @@ import SplashCursor from "@/components/ui/animations/splashcursor"
 export default function Home() {
   return (
     <div className="min-h-screen bg-linear-to-b from-[#f9f5f2] to-[#f5f0f9] dark:from-[#1f1a2e] dark:to-[#2a1e3f] transition-colors duration-300 relative overflow-hidden">
-      
-      <SplashCursor
-        SIM_RESOLUTION={128}
-        DYE_RESOLUTION={1440}
-        CAPTURE_RESOLUTION={512}
-        DENSITY_DISSIPATION={5}
-        VELOCITY_DISSIPATION={2}
-        PRESSURE={0.1}
-        PRESSURE_ITERATIONS={20}
-        CURL={3}
-        SPLAT_RADIUS={0.2}
-        SPLAT_FORCE={6000}
-        SHADING={true}
-        COLOR_UPDATE_SPEED={10}
-        BACK_COLOR={{ r: 1, g: 1, b: 1 }}
-        TRANSPARENT={true}
-       />
+
+
+      <div className="hidden sm:block">
+        <SplashCursor
+          SIM_RESOLUTION={128}
+          DYE_RESOLUTION={1440}
+          CAPTURE_RESOLUTION={512}
+          DENSITY_DISSIPATION={5}
+          VELOCITY_DISSIPATION={2}
+          PRESSURE={0.1}
+          PRESSURE_ITERATIONS={20}
+          CURL={3}
+          SPLAT_RADIUS={0.2}
+          SPLAT_FORCE={6000}
+          SHADING={true}
+          COLOR_UPDATE_SPEED={10}
+          BACK_COLOR={{ r: 1, g: 1, b: 1 }}
+          TRANSPARENT={true}
+        />
+      </div>
       <Navbar />
 
       {/* Hero Section */}
@@ -69,10 +72,10 @@ export default function Home() {
                 >
                   {/* Subtle shimmer effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-                  
+
                   {/* Gentle glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8f7]/20 to-[#e9f5f0]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
+
                   <span className="relative z-10 transition-transform duration-300 group-hover:scale-105">
                     Go to Dashboard
                   </span>
@@ -97,7 +100,7 @@ export default function Home() {
               >
                 Learn More
               </Button>
-            </SignedOut>  
+            </SignedOut>
           </div>
 
           <div className="relative mx-auto max-w-2xl">
@@ -153,10 +156,10 @@ export default function Home() {
                 >
                   {/* Subtle shimmer effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-                  
+
                   {/* Gentle glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8f7]/20 to-[#e9f5f0]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
+
                   <span className="relative z-10 transition-transform duration-300 group-hover:scale-105">
                     Go to Dashboard
                   </span>
