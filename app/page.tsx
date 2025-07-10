@@ -12,30 +12,10 @@ import Link from "next/link"
 import Image from "next/image"
 import { SignedIn, SignedOut } from "@clerk/nextjs"
 import SplitText from "@/components/ui/animations/splittext"
-import SplashCursor from "@/components/ui/animations/splashcursor"
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-linear-to-b from-[#f9f5f2] to-[#f5f0f9] dark:from-[#1f1a2e] dark:to-[#2a1e3f] transition-colors duration-300 relative overflow-hidden">
-
-
-      <div className="hidden md:block">
-        <SplashCursor
-          SIM_RESOLUTION={128}
-          DYE_RESOLUTION={1440}
-          CAPTURE_RESOLUTION={512}
-          DENSITY_DISSIPATION={5}
-          VELOCITY_DISSIPATION={2}
-          PRESSURE={0.1}
-          PRESSURE_ITERATIONS={20}
-          CURL={3}
-          SPLAT_RADIUS={0.2}
-          SPLAT_FORCE={6000}
-          SHADING={true}
-          COLOR_UPDATE_SPEED={10}
-          BACK_COLOR={{ r: 1, g: 1, b: 1 }}
-          TRANSPARENT={true}
-        />
-      </div>
       <Navbar />
 
       {/* Hero Section */}
@@ -65,7 +45,7 @@ export default function Home() {
           </div>
           
           {/* Fixed height container for buttons and image */}
-          <div className="h-[650px] md:h-[1100px] flex flex-col justify-between items-center">
+          <div className="h-[675px] md:h-[1100px] flex flex-col justify-between items-center">
             {/* Button container with fixed height */}
             <div className="h-16 flex flex-col sm:flex-row justify-center gap-4 mb-0">
               <SignedIn>

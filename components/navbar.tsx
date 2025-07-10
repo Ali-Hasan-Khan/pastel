@@ -51,8 +51,8 @@ export default function Navbar() {
         </div>
 
         <div className="w-[150px] flex justify-end">
-          <div className="w-[50px] flex items-center space-x-1 mr-2 sm:mr-0 sm:space-x-4">
             <ThemeToggle />
+          <div className="w-[150px] md:w-[60px] flex items-center space-x-1 mr-2 sm:mr-0 sm:space-x-4">
             <SignedOut>
               <SignInButton>
                 <Button
@@ -67,6 +67,8 @@ export default function Navbar() {
                 </Button>
               </SignUpButton>
             </SignedOut>
+          </div>
+          <div className="w-[55px] md:w-[10px] flex items-center space-x-1 mr-2 sm:mr-0 sm:space-x-4">
             <SignedIn>
               <UserButton />
             </SignedIn>

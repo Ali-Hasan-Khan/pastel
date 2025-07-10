@@ -75,7 +75,7 @@ export default function DashboardLayout({
             <div className="hidden">
               <Image src="/logo.png" alt="Pastel" width={40} height={40} />
             </div>
-            <div className="flex items-center space-x-4 ml-auto">
+            <div className="w-[90px] md:w-[100px] flex items-center space-x-4 ml-auto">
               <ThemeToggle />
               <UserButton 
                 appearance={{
