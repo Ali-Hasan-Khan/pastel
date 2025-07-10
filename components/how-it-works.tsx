@@ -29,23 +29,37 @@ export default function HowItWorks() {
           A simple process to preserve your memories and rediscover them when the time is right.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Fixed height container to prevent layout shift */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {steps.map((step, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-[#2a1e3f] rounded-2xl p-8 shadow-md border border-[#e9dff5] dark:border-[#3a2d4f] text-center hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="w-20 h-20 mx-auto bg-[#f9f5f2] dark:bg-[#3a2d4f] rounded-full flex items-center justify-center mb-6">
-                {step.icon}
+              className="bg-white dark:bg-[#2a1e3f] rounded-2xl p-8 shadow-md border border-[#e9dff5] dark:border-[#3a2d4f] text-center hover:shadow-lg transition-shadow duration-300 how-it-works-card">
+              <div>
+                {/* Fixed size icon container */}
+                <div 
+                  className="w-20 h-20 mx-auto bg-[#f9f5f2] dark:bg-[#3a2d4f] rounded-full flex items-center justify-center mb-6"
+                  style={{ minHeight: '80px' }} // Ensure consistent height
+                >
+                  {step.icon}
+                </div>
+                
+                {/* Fixed height text container */}
+                <div style={{ minHeight: '120px' }}>
+                  <h3 className="text-xl font-semibold text-[#6b5c7c] dark:text-[#d8c5f0] mb-4">
+                    {step.title}
+                  </h3>
+                  <p className="text-[#8a7a9b] dark:text-[#a99bc1] leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-[#6b5c7c] dark:text-[#d8c5f0] mb-4">{step.title}</h3>
-              <p className="text-[#8a7a9b] dark:text-[#a99bc1]">{step.description}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
-          <div className="h-0.5 w-24 bg-linear-to-r from-[#c4a9db] to-[#a2d8c0] dark:from-[#9f7fc0] dark:to-[#7ab5a0] mx-auto"></div>
+          <div className="h-0.5 w-24 bg-gradient-to-r from-[#c4a9db] to-[#a2d8c0] dark:from-[#9f7fc0] dark:to-[#7ab5a0] mx-auto"></div>
         </div>
       </div>
     </section>
