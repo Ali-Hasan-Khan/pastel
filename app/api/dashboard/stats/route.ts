@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import { auth } from '@clerk/nextjs/server'
+import { getCachedData, setCachedData } from '@/lib/redis-cache'
 
 const prisma = new PrismaClient()
 
@@ -16,6 +17,23 @@ export async function GET() {
       )
     }
 
+    // Create cache key for this user
+    const cacheKey = `dashboard-stats:${userId}`
+    
+    // Try to get cached data first
+    const cachedData = await getCachedData(cacheKey)
+    
+    if (cachedData) {
+      console.log(`Serving cached data for user: ${userId}`)
+      return NextResponse.json({ 
+        success: true, 
+        data: cachedData,
+        cached: true,
+        timestamp: new Date().toISOString()
+      })
+    }
+
+    console.log(`Fetching fresh data for user: ${userId}`)
     const now = new Date()
 
     // Get all capsules for the user
@@ -77,12 +95,19 @@ export async function GET() {
       totalCapsules,
       upcomingCapsules,
       deliveredCapsules,
-      recentCapsules
+      recentCapsules,
+      lastUpdated: new Date().toISOString()
     }
+
+    // Cache the result for 30 seconds
+    await setCachedData(cacheKey, stats, 30)
+    console.log(`Cached data for user: ${userId}`)
 
     return NextResponse.json({ 
       success: true, 
-      data: stats 
+      data: stats,
+      cached: false,
+      timestamp: new Date().toISOString()
     })
   } catch (error: any) {
     console.error('Error fetching dashboard stats:', error)

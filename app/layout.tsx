@@ -13,6 +13,7 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   preload: true,
+  weight: ["400", "500", "600", "700"],
  })
 
 export const metadata = {
@@ -36,6 +37,23 @@ export default function RootLayout({
             as="image"
             type="image/png"
           />
+          <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Critical CSS for LCP text */
+            .lcp-welcome-text {
+              font-size: 1.875rem;
+              line-height: 2.25rem;
+              font-weight: 700;
+              color: #6b5c7c;
+              margin-bottom: 0.5rem;
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+              font-display: swap;
+            }
+            .dark .lcp-welcome-text {
+              color: #d8c5f0;
+            }
+          `
+        }} />
         </head>
         <body className={inter.className} suppressHydrationWarning>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

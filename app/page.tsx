@@ -24,7 +24,7 @@ export default function Home() {
           <div className="flex flex-col items-center">
             <SplitText
               text="A gentle space to preserve your past, for the future."
-              className="mt-6 sm:mt-0 text-4xl md:text-5xl lg:text-6xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-6 leading-tight"
+              className="mt-6 sm:mt-0 text-4xl md:text-5xl lg:text-6xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-0 leading-tight"
               delay={100}
               duration={0.6}
               ease="power3.out"
@@ -37,7 +37,7 @@ export default function Home() {
             />
             <SplitText
               text="Capture the now. Open it later."
-              className="text-xl md:text-2xl text-[#8a7a9b] dark:text-[#a99bc1] mb-10"
+              className="text-xl md:text-2xl text-[#8a7a9b] dark:text-[#a99bc1] mt-6 mb-10"
               delay={100}
               duration={0.6}
               splitType="lines"

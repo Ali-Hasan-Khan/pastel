@@ -8,9 +8,11 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useUser,
 } from "@clerk/nextjs"
 
 export default function Navbar() {
+  const { isLoaded, isSignedIn } = useUser()
   return (
     <header className="fixed w-full bg-white/80 dark:bg-[#1f1a2e]/90 backdrop-blur-md z-50 border-b border-[#e9dff5] dark:border-[#3a2d4f]">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -50,9 +52,9 @@ export default function Navbar() {
           </nav>
         </div>
 
-        <div className="w-[150px] flex justify-end">
-            <ThemeToggle />
-          <div className="w-[150px] md:w-[60px] flex items-center space-x-1 mr-2 sm:mr-0 sm:space-x-4">
+        <div className="flex justify-end sm:max-w-[180px]">
+          <ThemeToggle />
+          {!isSignedIn && <div className="flex items-center sm:min-w-[180px] space-x-1 mr-2 sm:mr-0 sm:space-x-4">
             <SignedOut>
               <SignInButton>
                 <Button
@@ -67,12 +69,12 @@ export default function Navbar() {
                 </Button>
               </SignUpButton>
             </SignedOut>
-          </div>
-          <div className="w-[55px] md:w-[10px] flex items-center space-x-1 mr-2 sm:mr-0 sm:space-x-4">
+          </div>}
+          {isLoaded && isSignedIn && <div className="flex items-center min-w-[30px] sm:min-w-[160px] space-x-1 mr-2 sm:mr-0 sm:space-x-4">
             <SignedIn>
               <UserButton />
             </SignedIn>
-          </div>
+          </div>}
         </div>
 
       </div>
