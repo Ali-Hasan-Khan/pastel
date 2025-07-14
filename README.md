@@ -23,19 +23,19 @@ A beautiful and thoughtful journaling application that lets you send messages to
 ## TODO
 
 ### 🔧 Core Backend Features
-- [ ] **Automatic Delivery System** - Implement background job processing to automatically deliver capsules when their delivery date arrives
-- [ ] **Email Notifications** - Set up email service (SendGrid/Resend) for capsule delivery notifications
-- [ ] **Capsule Status Management** - Automatic status updates from 'scheduled' to 'delivered'
+- [x] **Automatic Delivery System** - Implement background job processing to automatically deliver capsules when their delivery date arrives(using vercel cron jobs)
+- [x] **Email Notifications** - Set up email service (Resend) for capsule delivery notifications
+- [x] **Capsule Status Management** - Automatic status updates from 'scheduled' to 'delivered'
 - [ ] **Database Cleanup** - Background tasks for data maintenance and cleanup
 
 ### 🤖 AI Integration
 - [ ] **Sentiment Analysis** - Integrate OpenAI/Google Cloud AI for emotional analysis of journal entries
-- [ ] **AI Reflections** - Generate personalized insights when capsules are delivered
+- [x] **AI Reflections** - Generate personalized insights when capsules are delivered
 - [ ] **Emotion Tracking** - Store and track emotional patterns over time
 - [ ] **Writing Pattern Analysis** - AI-powered analysis of writing habits and themes
 
 ### 📁 File Management
-- [ ] **Image Upload System** - Implement actual file upload functionality (currently placeholder)
+- [x] **Image Upload System** - Implement actual file upload functionality (currently placeholder)
 - [ ] **File Storage** - Set up cloud storage (AWS S3/Cloudinary) for images and attachments
 - [ ] **Multiple Media Types** - Support for audio recordings, videos, and documents
 - [ ] **File Compression** - Optimize uploaded files for storage
@@ -61,7 +61,7 @@ A beautiful and thoughtful journaling application that lets you send messages to
 - [ ] **Export Analytics** - Allow users to export their analytics data
 
 ### 📚 Archive & History
-- [ ] **Archive API** - Implement backend for viewing delivered capsules
+- [x] **Archive API** - Implement backend for viewing delivered capsules
 - [ ] **Search Functionality** - Full-text search across all memories
 - [ ] **Filtering & Sorting** - Advanced filters by date, emotion, tags, etc.
 - [ ] **Memory Timeline** - Visual timeline of user's memory journey
@@ -96,11 +96,11 @@ A beautiful and thoughtful journaling application that lets you send messages to
 - [ ] **Performance Monitoring** - Track app performance and user experience
 
 ### 🚀 Deployment & DevOps
-- [ ] **CI/CD Pipeline** - Automated testing and deployment
-- [ ] **Environment Management** - Proper staging and production environments
-- [ ] **Database Migrations** - Proper migration strategy for schema changes
-- [ ] **Monitoring & Logging** - Application and infrastructure monitoring
-- [ ] **Backup Strategy** - Automated database backups and disaster recovery
+- [x] **CI/CD Pipeline** - Automated testing and deployment via vercel
+- [x] **Environment Management** - Proper staging and production environments
+- [x] **Database Migrations** - Proper migration strategy for schema changes
+- [x] **Monitoring & Logging** - Application and infrastructure monitoring
+- [x] **Backup Strategy** - Automated database backups and disaster recovery
 
 ### 💡 Future Enhancements
 - [ ] **Voice Recordings** - Audio memory capture with speech-to-text
@@ -114,15 +114,7 @@ A beautiful and thoughtful journaling application that lets you send messages to
 
 ---
 
-**Priority Levels:**
-- 🔴 **High Priority**: Delivery system, AI integration, file management
-- 🟡 **Medium Priority**: Analytics, archive, settings, sharing
-- 🟢 **Low Priority**: Advanced features, integrations, mobile enhancements
 
 **Next Steps:**
-1. Implement automatic delivery system with background jobs
-2. Set up email notifications for capsule delivery
-3. Add AI sentiment analysis for emotional insights
-4. Build file upload and storage system
-5. Create real analytics with data visualization
-
+1. Build file upload and storage system
+2. Create real analytics with data visualization
