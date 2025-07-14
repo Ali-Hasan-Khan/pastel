@@ -48,7 +48,11 @@ export default function CapsulePage() {
             if (!response.ok) {
                 if (response.status === 404) {
                     setError("Capsule not found")
-                } else {
+                }
+                else if (response.status === 401) {
+                    setError("Unauthorized Access")
+                }
+                else {
                     setError("Failed to fetch capsule")
                 }
                 return
@@ -117,6 +121,7 @@ export default function CapsulePage() {
 
     // Show error state
     if (error || !capsule) {
+        console.log(error)
         return (
             <DashboardLayout>
                 <div className="max-w-4xl mx-auto space-y-8">
@@ -128,7 +133,9 @@ export default function CapsulePage() {
                             <p className="text-[#8a7a9b] dark:text-[#a99bc1] mb-4">
                                 {error === "Capsule not found" 
                                     ? "The capsule you're looking for doesn't exist."
-                                    : "Something went wrong while loading this capsule."
+                                    : error === "Unauthorized Access"
+                                        ? "Please sign in with correct account to view this capsule."
+                                        : "Something went wrong while loading this capsule."
                                 }
                             </p>
                             <Button
