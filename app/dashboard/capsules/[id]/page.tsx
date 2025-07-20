@@ -6,7 +6,7 @@ import { useParams } from "next/navigation"
 import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import { Lock, Calendar, Clock, MessageSquare, ArrowLeft, Download, Share2 } from "lucide-react"
+import { Lock, Calendar, Clock, MessageSquare, ArrowLeft, Download, Share2, Delete, Trash } from "lucide-react"
 import Link from "next/link"
 import { LoadingSpinnerWithText } from "@/components/ui/loading-spinner"
 import Image from "next/image"
@@ -64,6 +64,25 @@ export default function CapsulePage() {
             setError("Network error occurred")
         } finally {
             setLoading(false)
+        }
+    }
+
+    const deleteCapsule = async () => {
+        try {
+            const response = await fetch(`/api/capsules/${id}`, {
+                method: 'DELETE'
+            })
+
+            if (!response.ok) {
+                setError("Failed to delete capsule")
+                return
+            }
+
+            const data = await response.json()
+            console.log(data)
+            window.location.href = "/dashboard/upcoming"
+        } catch (err) {
+            setError("Network error occurred")
         }
     }
 
@@ -197,6 +216,13 @@ export default function CapsulePage() {
 
                         <div className="flex gap-2">
                             <Button
+                                onClick={() => deleteCapsule()}
+                                variant="outline"
+                                className="rounded-xl border-[#e9dff5] dark:border-[#3a2d4f] text-[#8a7a9b] hover:text-[#6b5c7c] hover:bg-[#f0e8f7] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] dark:hover:bg-[#3a2d4f]"
+                            >
+                                <Trash className="w-4 h-4" />
+                            </Button>
+                            <Button
                                 variant="outline"
                                 className="rounded-xl border-[#e9dff5] dark:border-[#3a2d4f] text-[#8a7a9b] hover:text-[#6b5c7c] hover:bg-[#f0e8f7] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] dark:hover:bg-[#3a2d4f]"
                             >
@@ -248,6 +274,8 @@ export default function CapsulePage() {
                                     {capsule.images.map((image: string, index: number) => (
                                         <div key={index} className="relative">
                                             <Image
+                                                width={100}
+                                                height={100}
                                                 src={image}
                                                 alt={`Capsule image ${index + 1}`}
                                                 className="w-full h-48 object-cover rounded-lg"

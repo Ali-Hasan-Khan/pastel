@@ -27,3 +27,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     return NextResponse.json(capsule)
 }
+
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { userId } = await auth()
+    const { id } = await params
+
+    const capsule = await prisma.capsule.delete({
+        where: { id, userId: userId as string }
+    })
+    return NextResponse.json({ success: true, message: 'Capsule deleted successfully' })
+}

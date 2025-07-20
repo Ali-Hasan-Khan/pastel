@@ -184,6 +184,7 @@ export default function UpcomingPage() {
                   </div>
                 </div>
                 <Button
+                  onClick={() => window.location.href = `/dashboard/capsules/${capsule.id}`}
                   variant="outline"
                   className="shrink-0 rounded-xl border-[#e9dff5] dark:border-[#3a2d4f] text-[#8a7a9b] hover:text-[#6b5c7c] hover:bg-[#f0e8f7] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] dark:hover:bg-[#3a2d4f]"
                 >

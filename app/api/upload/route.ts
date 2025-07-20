@@ -3,6 +3,7 @@ import { auth } from '@clerk/nextjs/server'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { v4 as uuidv4 } from 'uuid'
+import { supabase } from '@/lib/supabase'
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     const formData = await req.formData()
     const file = formData.get('file') as File
-    
+
     if (!file) {
       return NextResponse.json(
         { success: false, error: 'No file provided' },
@@ -47,25 +48,32 @@ export async function POST(req: NextRequest) {
     // Generate unique filename
     const fileExtension = file.name.split('.').pop()
     const fileName = `${uuidv4()}.${fileExtension}`
-    
-    // Create upload directory if it doesn't exist
-    const uploadDir = join(process.cwd(), 'public', 'uploads', 'capsules')
-    try {
-      await mkdir(uploadDir, { recursive: true })
-    } catch (error) {
-      // Directory might already exist
-    }
 
     // Save file
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
-    const filePath = join(uploadDir, fileName)
-    
-    await writeFile(filePath, buffer)
+
+    // Upload file to Supabase
+    const { data, error } = await supabase.storage
+      .from('capsule-images')
+      .upload(fileName, buffer, {
+        contentType: file.type,
+        cacheControl: '3600',
+        upsert: false
+      })
+
+    if (error) {
+      console.error('Supabase upload error:', error)
+      return NextResponse.json(
+        { success: false, error: 'Upload failed' },
+        { status: 500 }
+      )
+    }
 
     // Return the public URL
-    const fileUrl = `/uploads/capsules/${fileName}`
-    
+    const {data: urlData} = supabase.storage.from('capsule-images').getPublicUrl(fileName)
+    const fileUrl = urlData.publicUrl
+
     return NextResponse.json({
       success: true,
       data: {
@@ -76,6 +84,8 @@ export async function POST(req: NextRequest) {
         type: file.type
       }
     })
+
+    
 
   } catch (error: any) {
     console.error('Image upload error:', error)

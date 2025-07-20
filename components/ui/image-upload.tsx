@@ -48,6 +48,7 @@ export function ImageUpload({
       const uploadPromises = files.map(async (file) => {
         const formData = new FormData()
         formData.append('file', file)
+        console.log(formData)
 
         const response = await fetch('/api/upload', {
           method: 'POST',
@@ -148,6 +149,8 @@ export function ImageUpload({
               >
                 <div className="aspect-square rounded-lg overflow-hidden border border-[#e9dff5] dark:border-[#3a2d4f] bg-[#f9f5f2] dark:bg-[#251c36]">
                   <Image
+                    width={80}
+                    height={80}
                     src={image.url}
                     alt={image.originalName}
                     className="w-full h-full object-cover"
