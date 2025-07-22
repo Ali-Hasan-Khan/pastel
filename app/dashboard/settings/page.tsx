@@ -4,9 +4,11 @@ import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { motion } from "framer-motion"
-import { Bell, Mail, Palette, Lock, Shield, Download, Trash2 } from "lucide-react"
+import { Bell, Shield, Download, Trash2 } from "lucide-react"
+import { useState } from "react"
 
 export default function SettingsPage() {
+  const [showConfirmDeleteAccount, setShowConfirmDeleteAccount] = useState(false)
   const sections = [
     {
       title: "Notification Preferences",
@@ -50,22 +52,22 @@ export default function SettingsPage() {
     },
   ]
 
-  const dangerZone = [
-    {
-      label: "Export All Data",
-      description: "Download all your memories and account data.",
-      icon: Download,
-      buttonText: "Export",
-      buttonVariant: "outline" as const,
-    },
-    {
-      label: "Delete Account",
-      description: "Permanently delete your account and all data.",
-      icon: Trash2,
-      buttonText: "Delete",
-      buttonVariant: "destructive" as const,
-    },
-  ]
+
+  const DeleteAccount = async () => {
+    console.log("Deleting Account!!")
+    const res = await fetch("/api/auth/delete-account", {
+      method: "DELETE",
+    })
+    if (res.ok) {
+      console.log("Account deleted successfully")
+      window.location.href = "/sign-in"
+    } else {
+      console.error("Failed to delete account")
+    }
+  }
+
+
+
 
   return (
     <DashboardLayout>
@@ -147,31 +149,59 @@ export default function SettingsPage() {
           </h2>
           <div className="bg-red-50 dark:bg-red-900/10 rounded-xl border border-red-100 dark:border-red-900/20 overflow-hidden">
             <div className="p-6 space-y-6">
-              {dangerZone.map((action) => (
-                <div key={action.label} className="flex items-center justify-between">
-                  <div className="flex items-start gap-3">
-                    <action.icon className="w-5 h-5 text-red-500 dark:text-red-400 mt-1" />
-                    <div>
-                      <h3 className="font-medium text-red-700 dark:text-red-300">
-                        {action.label}
-                      </h3>
-                      <p className="text-sm text-red-600 dark:text-red-400">
-                        {action.description}
-                      </p>
+              <div key="Export All Data" className="flex items-center justify-between">
+                <div className="flex items-start gap-3">
+                  <Download className="w-5 h-5 text-red-500 dark:text-red-400 mt-1" />
+                  <div>
+                    <h3 className="font-medium text-red-700 dark:text-red-300">
+                      Export All Data
+                    </h3>
+                    <p className="text-sm text-red-600 dark:text-red-400">
+                      Download all your memories and account data.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  className="rounded-xl border-black dark:border-red-300 text-black hover:bg-[#f0e8f7] dark:text-red-300 dark:hover:bg-red-900/20 transition-colors"
+                >
+                  Export
+                </Button>
+              </div>
+              <div key="Delete Account" className="flex items-center justify-between">
+                <div className="flex items-start gap-3">
+                  <Trash2 className="w-5 h-5 text-red-500 dark:text-red-400 mt-1" />
+                  <div>
+                    <h3 className="font-medium text-red-700 dark:text-red-300">
+                      Delete Account
+                    </h3>
+                    <p className="text-sm text-red-600 dark:text-red-400">
+                      Permanently delete your account and all data.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => setShowConfirmDeleteAccount(true)}
+                  variant="destructive"
+                  className="rounded-xl bg-red-500 hover:bg-red-600 text-white dark:bg-red-600 dark:hover:bg-red-700"
+                >
+                  Delete
+                </Button>
+
+                {showConfirmDeleteAccount && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                    <div className="bg-white dark:bg-[#181022] rounded-xl shadow-xl p-8 max-w-sm w-full">
+                      <h2 className="text-lg font-semibold text-[#6b5c7c] dark:text-[#d8c5f0] mb-4">
+                        Are you sure you want to delete your account?
+                      </h2>
+                      <div className="flex items-center gap-2 justify-end">
+                        <Button onClick={() => setShowConfirmDeleteAccount(false)}>Cancel</Button>
+                        <Button onClick={DeleteAccount} variant="destructive">Delete</Button>
+                      </div>
                     </div>
                   </div>
-                  <Button
-                    variant={action.buttonVariant}
-                    className={
-                      action.buttonVariant === "destructive"
-                        ? "rounded-xl bg-red-500 hover:bg-red-600 text-white dark:bg-red-600 dark:hover:bg-red-700"
-                        : "rounded-xl border-black dark:border-red-300 text-black hover:bg-[#f0e8f7] dark:text-red-300 dark:hover:bg-red-900/20 transition-colors"
-                    }
-                  >
-                    {action.buttonText}
-                  </Button>
-                </div>
-              ))}
+                )}
+              </div>
             </div>
           </div>
         </div>
