@@ -192,13 +192,13 @@ export default function CapsulePage() {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex items-start justify-between"
+                        className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-0"
                     >
-                        <div>
-                            <h1 className="text-3xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
+                        <div className="flex-1 min-w-0">
+                            <h1 className="text-2xl sm:text-3xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
                                 {capsule.title}
                             </h1>
-                            <div className="flex items-center gap-4 text-[#8a7a9b] dark:text-[#a99bc1]">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-[#8a7a9b] dark:text-[#a99bc1]">
                                 <div className="flex items-center gap-1">
                                     <Calendar className="w-4 h-4" />
                                     <span>Created {new Date(capsule.createdAt).toLocaleDateString()}</span>
@@ -214,7 +214,7 @@ export default function CapsulePage() {
                             </div>
                         </div>
 
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 mt-4 sm:mt-0">
                             <Button
                                 onClick={() => deleteCapsule()}
                                 variant="outline"
@@ -246,39 +246,39 @@ export default function CapsulePage() {
                     className="bg-white dark:bg-[#2a1e3f] rounded-2xl border border-[#e9dff5] dark:border-[#3a2d4f] overflow-hidden"
                 >
                     {isLocked ? (
-                        <div className="p-12 text-center">
-                            <Lock className="w-16 h-16 text-[#c4a9db] dark:text-[#9f7fc0] mx-auto mb-4" />
-                            <h2 className="text-2xl font-semibold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
+                        <div className="p-6 sm:p-12 text-center flex flex-col items-center">
+                            <Lock className="w-12 h-12 sm:w-16 sm:h-16 text-[#c4a9db] dark:text-[#9f7fc0] mx-auto mb-4" />
+                            <h2 className="text-xl sm:text-2xl font-semibold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
                                 This memory is still locked
                             </h2>
-                            <p className="text-[#8a7a9b] dark:text-[#a99bc1] mb-6">
+                            <p className="text-[#8a7a9b] dark:text-[#a99bc1] mb-6 text-base sm:text-lg">
                                 You can read this on {new Date(capsule.deliveryDate).toLocaleDateString()}
                             </p>
                             <Button
-                                className="rounded-xl bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad]"
+                                className="rounded-xl bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] w-full max-w-xs"
                             >
                                 Notify me when it's ready
                             </Button>
                         </div>
                     ) : (
-                        <div className="p-8">
+                        <div className="p-4 sm:p-8">
                             <div className="prose dark:prose-invert max-w-none">
-                                <div className="whitespace-pre-wrap text-[#6b5c7c] dark:text-[#d8c5f0]">
+                                <div className="whitespace-pre-wrap text-[#6b5c7c] dark:text-[#d8c5f0] text-base sm:text-lg break-words">
                                     {capsule.content}
                                 </div>
                             </div>
                             
                             {/* Display images if any */}
                             {capsule.images && capsule.images.length > 0 && (
-                                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                                     {capsule.images.map((image: string, index: number) => (
                                         <div key={index} className="relative">
                                             <Image
-                                                width={100}
-                                                height={100}
+                                                width={600}
+                                                height={300}
                                                 src={image}
                                                 alt={`Capsule image ${index + 1}`}
-                                                className="w-full h-48 object-cover rounded-lg"
+                                                className="w-full h-48 sm:h-56 object-cover rounded-lg"
                                             />
                                         </div>
                                     ))}
@@ -294,15 +294,15 @@ export default function CapsulePage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="bg-[#f9f5f2] dark:bg-[#251c36] rounded-xl p-6"
+                        className="bg-[#f9f5f2] dark:bg-[#251c36] rounded-xl p-3 sm:p-6"
                     >
-                        <div className="flex items-start gap-3">
-                            <MessageSquare className="w-5 h-5 text-[#a2d8c0] dark:text-[#7ab5a0] mt-1" />
-                            <div>
+                        <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-3">
+                            <MessageSquare className="w-10 h-10 sm:w-5 sm:h-5 text-[#a2d8c0] dark:text-[#7ab5a0] mt-1 sm:mt-1 mb-2 sm:mb-0" />
+                            <div className="flex-1 min-w-0">
                                 <h3 className="font-medium text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
                                     AI Reflection
                                 </h3>
-                                <p className="text-[#8a7a9b] dark:text-[#a99bc1]">
+                                <p className="text-[#8a7a9b] dark:text-[#a99bc1] break-words">
                                     {capsule.aiReflection || "AI reflection will be available once the capsule is delivered and processed."}
                                 </p>
                             </div>
