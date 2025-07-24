@@ -13,7 +13,6 @@ import Image from "next/image"
 import { SignedIn, SignedOut } from "@clerk/nextjs"
 import SplitText from "@/components/ui/animations/splittext"
 import { Footer } from "@/components/ui/footer"
-// import AnimatedHeart from "@/components/ui/animations/animatedheart"
 import { FAQ } from "@/components/faq"
 
 export default function Home() {
