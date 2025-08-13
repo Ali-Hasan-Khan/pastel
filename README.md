@@ -71,7 +71,7 @@ A beautiful and thoughtful journaling application that lets you send messages to
 - [ ] **User Preferences** - Implement actual settings functionality
 - [ ] **Notification Settings** - Customize email/push notification preferences
 - [ ] **Privacy Controls** - Data retention, deletion, and privacy settings
-- [ ] **Theme Customization** - More theme options and color schemes
+- [x] **Theme Customization** - More theme options and color schemes
 - [ ] **Language Support** - Internationalization (i18n) support
 
 ### 🔐 Security & Privacy
