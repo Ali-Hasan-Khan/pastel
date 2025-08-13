@@ -75,7 +75,7 @@ export default function HistoryPage() {
                 </div>
 
                 <div className="grid gap-6">
-                    {pastCapsules.map((capsule, index) => (
+                    {pastCapsules.length > 0 && pastCapsules.map((capsule, index) => (
                         <motion.div
                             key={capsule.id}
                             initial={{ opacity: 0, y: 20 }}

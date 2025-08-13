@@ -1,15 +1,28 @@
 "use client"
 
 import DashboardLayout from "@/components/dashboard/layout"
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { LineChart, BarChart, Calendar, Heart, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function AnalyticsPage() {
+  const [isLocked, setIsLocked] = useState(true)
   return (
     <DashboardLayout>
-      <div className="max-w-6xl mx-auto space-y-8">
+      <div className="max-w-6xl mx-auto space-y-8 relative">
+        {isLocked && (
+              <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="absolute inset-0 m-8 flex items-center justify-center backdrop-blur-sm rounded-md bg-[#c4a9db]/50 z-0">
+                <div className="flex text-center justify-center font-bold text-[#6b5c7c] dark:text-[#d8c5f0]">
+                  Work in Progress
+                </div>
+              </motion.div>
+            )}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
