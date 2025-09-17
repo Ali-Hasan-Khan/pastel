@@ -1,15 +1,14 @@
 "use client"
 
-import DashboardLayout from "@/components/dashboard/layout"
+
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Share2, Globe, Lock, Copy, Settings, Users } from "lucide-react"
+import { Share2, Globe, Lock, Copy, Settings, Users, Clock } from "lucide-react"
 
 export default function SharePage() {
   const [isLocked, setIsLocked] = useState(true)
   return (
-    <DashboardLayout>
       <div className="max-w-4xl mx-auto space-y-8 relative">
         {isLocked && (
               <motion.div
@@ -18,7 +17,7 @@ export default function SharePage() {
               transition={{ delay: 0.5, duration: 0.5 }}
               className="absolute inset-0 m-8 flex items-center justify-center backdrop-blur-sm rounded-md bg-[#c4a9db]/50 z-0">
                 <div className="flex text-center justify-center font-bold text-[#6b5c7c] dark:text-[#d8c5f0]">
-                  Work in Progress
+                  <Clock className="w-5 h-5 mr-2" /> Work in Progress
                 </div>
               </motion.div>
             )}
@@ -164,6 +163,6 @@ export default function SharePage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    
   )
 }

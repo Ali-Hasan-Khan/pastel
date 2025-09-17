@@ -1,6 +1,6 @@
 "use client"
 
-import DashboardLayout from "@/components/dashboard/layout"
+
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { motion } from "framer-motion"
@@ -70,7 +70,7 @@ export default function SettingsPage() {
 
 
   return (
-    <DashboardLayout>
+    
       <div className="max-w-4xl mx-auto space-y-12">
         <div>
           <h1 className="text-3xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
@@ -206,6 +206,6 @@ export default function SettingsPage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    
   )
 }

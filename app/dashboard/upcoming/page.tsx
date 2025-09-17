@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
-import DashboardLayout from "@/components/dashboard/layout"
+
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { Clock, Calendar, Lock } from "lucide-react"
@@ -54,7 +54,7 @@ export default function UpcomingPage() {
   // Show loading state while Clerk loads
   if (!isLoaded) {
     return (
-      <DashboardLayout>
+      
         <div className="max-w-4xl mx-auto space-y-8 mt-24">
           <div className="flex items-center justify-center min-h-[400px]">
             <LoadingSpinnerWithText 
@@ -63,14 +63,14 @@ export default function UpcomingPage() {
             />
           </div>
         </div>
-      </DashboardLayout>
+      
     )
   }
 
   // Show sign-in prompt if not authenticated
   if (!isSignedIn) {
     return (
-      <DashboardLayout>
+      
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-center">
@@ -83,12 +83,12 @@ export default function UpcomingPage() {
             </div>
           </div>
         </div>
-      </DashboardLayout>
+      
     )
   }
 
   return (
-    <DashboardLayout>
+    
       <div className="max-w-4xl mx-auto space-y-8">
         <div>
           <h1 className="text-3xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
@@ -219,6 +219,6 @@ export default function UpcomingPage() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    
   )
 }

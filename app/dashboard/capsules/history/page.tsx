@@ -1,6 +1,5 @@
 "use client"
 
-import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
 import { useUser } from "@clerk/nextjs"
 import { motion } from "framer-motion"
@@ -49,7 +48,7 @@ export default function HistoryPage() {
 
     if (loading) {
         return (
-            <DashboardLayout>
+            
                 <div className="max-w-4xl mx-auto space-y-8">
                     <div className="flex items-center justify-center min-h-[400px]">
                         <LoadingSpinnerWithText
@@ -58,12 +57,12 @@ export default function HistoryPage() {
                         />
                     </div>
                 </div>
-            </DashboardLayout>
+            
         )
     }
 
     return (
-        <DashboardLayout>
+        
             <div className="max-w-4xl mx-auto space-y-8">
                 <div>
                     <h1 className="text-3xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
@@ -148,6 +147,6 @@ export default function HistoryPage() {
                     </Link>
                 </div>
             </div>
-        </DashboardLayout>
+        
     )
 }

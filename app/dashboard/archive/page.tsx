@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { motion } from "framer-motion"
@@ -43,7 +42,7 @@ export default function ArchivePage() {
   ]
 
   return (
-    <DashboardLayout>
+    
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex items-center justify-between">
           <div>
@@ -154,6 +153,6 @@ export default function ArchivePage() {
           ))}
         </div>
       </div>
-    </DashboardLayout>
+    
   )
 }

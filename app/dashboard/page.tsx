@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
 import { PenLine, Clock, Lock, Send } from "lucide-react"
-import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
 import { LoadingSpinnerWithText } from "@/components/ui/loading-spinner"
 import Link from "next/link"
@@ -59,7 +58,7 @@ export default function DashboardPage() {
   // Show loading state while Clerk loads
   if (!isLoaded) {
     return (
-      <DashboardLayout>
+      
         <div className="space-y-8">
           <div className="flex items-center justify-center min-h-[400px]">
             <LoadingSpinnerWithText
@@ -68,14 +67,14 @@ export default function DashboardPage() {
             />
           </div>
         </div>
-      </DashboardLayout>
+      
     )
   }
 
   // Show sign-in prompt if not authenticated
   if (!isSignedIn) {
     return (
-      <DashboardLayout>
+      
         <div className="space-y-8">
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-center">
@@ -88,7 +87,7 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-      </DashboardLayout>
+      
     )
   }
 
@@ -100,7 +99,7 @@ export default function DashboardPage() {
   ] : []
 
   return (
-    <DashboardLayout>
+    
       <div className="space-y-8">
         {/* Welcome Section */}
         <div>
@@ -297,6 +296,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    
   )
 }

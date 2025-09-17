@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useUser } from "@clerk/nextjs"
-import DashboardLayout from "@/components/dashboard/layout"
+
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -200,20 +200,20 @@ export default function ComposePage() {
   // Show loading state while Clerk loads
   if (!isLoaded) {
     return (
-      <DashboardLayout>
+      
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-[#8a7a9b] dark:text-[#a99bc1]">Loading...</div>
           </div>
         </div>
-      </DashboardLayout>
+      
     )
   }
 
   // Show sign-in prompt if not authenticated
   if (!isSignedIn) {
     return (
-      <DashboardLayout>
+      
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-center">
@@ -226,7 +226,7 @@ export default function ComposePage() {
             </div>
           </div>
         </div>
-      </DashboardLayout>
+      
     )
   }
 
@@ -241,7 +241,7 @@ export default function ComposePage() {
   const maxDateString = maxDate.toISOString().split('T')[0]
 
   return (
-    <DashboardLayout>
+    
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Success Modal Overlay */}
         <AnimatePresence>
@@ -564,6 +564,6 @@ export default function ComposePage() {
           </p>
         </div>
       </div>
-    </DashboardLayout>
+    
   )
 }
