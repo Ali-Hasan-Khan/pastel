@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
 import { useParams } from "next/navigation"
-import DashboardLayout from "@/components/dashboard/layout"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { Lock, Calendar, Clock, MessageSquare, ArrowLeft, Download, Share2, Delete, Trash } from "lucide-react"
@@ -89,23 +88,20 @@ export default function CapsulePage() {
     // Show loading state while Clerk loads
     if (!isLoaded) {
         return (
-            <DashboardLayout>
-                <div className="max-w-4xl mx-auto space-y-8">
-                    <div className="flex items-center justify-center min-h-[400px]">
-                        <LoadingSpinnerWithText
-                            text="Loading your capsule..."
-                            size="lg"
-                        />
-                    </div>
+            <div className="max-w-4xl mx-auto space-y-8">
+                <div className="flex items-center justify-center min-h-[400px]">
+                    <LoadingSpinnerWithText
+                        text="Loading your capsule..."
+                        size="lg"
+                    />
                 </div>
-            </DashboardLayout>
+            </div>
         )
     }
 
     // Show sign-in prompt if not authenticated
     if (!isSignedIn) {
         return (
-            <DashboardLayout>
                 <div className="max-w-4xl mx-auto space-y-8">
                     <div className="flex items-center justify-center min-h-[400px]">
                         <div className="text-center">
@@ -118,23 +114,20 @@ export default function CapsulePage() {
                         </div>
                     </div>
                 </div>
-            </DashboardLayout>
         )
     }
 
     // Show loading state while fetching data
     if (loading) {
         return (
-            <DashboardLayout>
-                <div className="max-w-4xl mx-auto space-y-8">
-                    <div className="flex items-center justify-center min-h-[400px]">
-                        <LoadingSpinnerWithText
-                            text="Loading capsule..."
-                            size="lg"
-                        />
-                    </div>
+            <div className="max -w-4xl mx-auto space-y-8">
+                <div className="flex items-center justify-center min-h-[400px]">
+                    <LoadingSpinnerWithText
+                        text="Loading capsule..."
+                        size="lg"
+                    />
                 </div>
-            </DashboardLayout>
+            </div>
         )
     }
 
@@ -142,7 +135,6 @@ export default function CapsulePage() {
     if (error || !capsule) {
         console.log(error)
         return (
-            <DashboardLayout>
                 <div className="max-w-4xl mx-auto space-y-8">
                     <div className="flex items-center justify-center min-h-[400px]">
                         <div className="text-center">
@@ -167,7 +159,6 @@ export default function CapsulePage() {
                         </div>
                     </div>
                 </div>
-            </DashboardLayout>
         )
     }
 
@@ -177,7 +168,6 @@ export default function CapsulePage() {
     const daysRemaining = Math.ceil((deliveryDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24))
 
     return (
-        <DashboardLayout>
             <div className="max-w-4xl mx-auto space-y-8">
                 {/* Header */}
                 <div>
@@ -310,6 +300,5 @@ export default function CapsulePage() {
                     </motion.div>
                 )}
             </div>
-        </DashboardLayout>
     )
 }
