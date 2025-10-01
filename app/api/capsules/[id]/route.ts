@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
-import { auth, createClerkClient } from '@clerk/nextjs/server'
+import { auth } from '@clerk/nextjs/server'
 import { prisma } from "@/lib/prisma"
 import { invalidateCache } from "@/lib/redis-cache"
 
-const clerkClient = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY })
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const { userId } = await auth()
     
-    const user = await clerkClient.users.getUser(userId as string)
     
     const { id } = await params
     const capsule = await prisma.capsule.findUnique({

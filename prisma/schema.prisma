@@ -17,7 +17,7 @@ model Capsule {
   status       String   @default("scheduled")
   images       String[]
   deliveredAt  DateTime?
-  aiReflection String?   // <-- Add this line
+  aiReflection String?   
   createdAt    DateTime @default(now())
 
   @@index([deliveryDate, status])

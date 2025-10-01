@@ -34,7 +34,7 @@ const config = {
           foreground: "#ffffff",
         },
         accent: {
-          DEFAULT: "#f0c3a0",
+          DEFAULT: "#f0e8f7",
           foreground: "#ffffff",
         },
         muted: {
@@ -52,6 +52,18 @@ const config = {
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
+        },
+        emotional: {
+          low: "#c4a9db",
+          "low-light": "#c4a9db",
+          medium: "#c4a9db",
+          "medium-light": "#c4a9db",
+          high: "#c4a9db",
+          "high-light": "#c4a9db",
+          "very-high": "#c4a9db",
+          "very-high-light": "#c4a9db",
+          empty: "#c4a9db",
+          "empty-light": "#c4a9db",
         },
       },
       borderRadius: {
