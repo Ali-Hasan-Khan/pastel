@@ -8,13 +8,21 @@ import {
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
+import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google"
 
-const inter = Inter({ 
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
-  preload: true,
-  weight: ["400", "500", "600", "700"],
- })
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-jakarta"
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-mono"
+})
 
 export const metadata = {
   title: "Pastel - A Personal AI-Powered Memory Vault",
@@ -33,12 +41,18 @@ export default function RootLayout({
         <head>
           <link
             rel="preload"
-            href="/placeholder.png"
+            href="/placeholder-light.png"
+            as="image"
+            type="image/png"
+          />
+          <link
+            rel="preload"
+            href="/placeholder-dark.png"
             as="image"
             type="image/png"
           />
           <style dangerouslySetInnerHTML={{
-          __html: `
+            __html: `
             /* Critical CSS for LCP text */
             .lcp-welcome-text {
               font-size: 1.875rem;
@@ -53,9 +67,9 @@ export default function RootLayout({
               color: #d8c5f0;
             }
           `
-        }} />
+          }} />
         </head>
-        <body className={inter.className} suppressHydrationWarning>
+        <body className={`${plusJakartaSans.variable} ${ibmPlexMono.variable} ${plusJakartaSans.className}`} suppressHydrationWarning>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
           </ThemeProvider>

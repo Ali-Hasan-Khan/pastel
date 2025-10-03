@@ -52,7 +52,7 @@ export default function Navbar() {
           </nav>
         </div>
 
-        <div className="flex justify-end sm:max-w-[180px]">
+        <div className="flex justify-end sm:max-w-[180px] sm:min-w-[180px]">
           <ThemeToggle />
           {!isSignedIn && <div className="flex items-center sm:min-w-[180px] space-x-1 mr-2 sm:mr-0 sm:space-x-4">
             <SignedOut>
@@ -70,7 +70,7 @@ export default function Navbar() {
               </SignUpButton>
             </SignedOut>
           </div>}
-          {isLoaded && isSignedIn && <div className="flex items-center min-w-[30px] sm:min-w-[160px] space-x-1 mr-2 sm:mr-0 sm:space-x-4">
+          {isLoaded && isSignedIn && <div className="flex items-center space-x-1 mr-2 sm:mr-0 sm:space-x-4">
             <SignedIn>
               <UserButton />
             </SignedIn>

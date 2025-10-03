@@ -22,8 +22,8 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-20 pb-16 md:pt-32 md:pb-24 text-center">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex flex-col items-center">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-col max-w-2xl mx-auto items-center">
             <SplitText
               text="A gentle space to preserve your past, for the future."
               className="mt-6 sm:mt-0 text-4xl md:text-5xl lg:text-6xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-0 leading-tight"
@@ -46,7 +46,7 @@ export default function Home() {
             />
           </div>
           {/* Fixed height container for buttons and image */}
-          <div className="h-[675px] md:h-[1100px] flex flex-col justify-between items-center">
+          <div className="h-auto flex flex-col max-w-2xl mx-auto justify-between items-center">
             {/* Button container with fixed height */}
             <div className="h-16 flex flex-col sm:flex-row justify-center gap-4 mb-0">
               <SignedIn>
@@ -88,21 +88,32 @@ export default function Home() {
               </SignedOut>
             </div>
 
-            {/* Image container */}
-            <div className="relative mx-auto max-w-2xl w-full">
-              <div className="absolute inset-0 bg-[#e2d5f0] dark:bg-[#3a2d4f] rounded-3xl transform rotate-1 translate-x-1 translate-y-1"></div>
-              <div className="relative bg-white dark:bg-[#2a1e3f] rounded-3xl shadow-lg overflow-hidden border border-[#e9dff5] dark:border-[#3a2d4f] p-4">
-                <Image
-                  src="/placeholder.png"
-                  alt="Pastel app interface mockup"
-                  width={800}
-                  height={500}
-                  priority={true}
-                  className="w-full rounded-2xl"
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                />
-              </div>
+
+          </div>
+          {/* Image container */}
+          <div className="relative m-4">
+            <div className="absolute inset-0 bg-[#e2d5f0] dark:bg-[#3a2d4f] rounded-3xl transform rotate-1 translate-x-1 translate-y-1"></div>
+            <div className="relative bg-white dark:bg-[#2a1e3f] rounded-3xl shadow-lg overflow-hidden border border-[#e9dff5] dark:border-[#3a2d4f] p-4">
+              <Image
+                src="/placeholder-light.png"
+                alt="Pastel app interface mockup"
+                width={800}
+                height={500}
+                priority={true}
+                className="w-full rounded-2xl block dark:hidden"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+              />
+              <Image
+                src="/placeholder-dark.png"
+                alt="Pastel app interface mockup"
+                width={800}
+                height={500}
+                priority={true}
+                className="w-full rounded-2xl hidden dark:block"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+              />
             </div>
           </div>
         </div>
