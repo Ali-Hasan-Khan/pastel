@@ -33,7 +33,7 @@ const config = {
           foreground: "#ffffff",
         },
         secondary: {
-          DEFAULT: "#a2d8c0",
+          DEFAULT: "#ffffff",
           foreground: "#ffffff",
         },
         accent: {

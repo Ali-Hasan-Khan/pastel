@@ -3,7 +3,6 @@ import Image from "next/image"
 
 export const Footer = () => {
   return (
-    // <footer className="bg-[#e2d5f0] dark:bg-[#1f1a2e] py-12 rounded-t-4xl shadow-md border-t border-[#e9dff5] dark:border-[#3a2d4f]">
     <footer className="bg-[#e2d5f0] dark:bg-[#1f1a2e] py-12 rounded-t-4xl border-t border-[#e9dff5] dark:border-[#3a2d4f]"
       style={{
         boxShadow: '0 -8px 8px -1px rgba(0, 0, 0, 0.12), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)'

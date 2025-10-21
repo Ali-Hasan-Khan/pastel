@@ -17,7 +17,7 @@ import { FAQ } from "@/components/faq"
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-b from-[#f9f5f2] to-[#f5f0f9] dark:from-[#1f1a2e] dark:to-[#2a1e3f] transition-colors duration-300 relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-b from-accent to-[#f5f0f9] dark:from-[#1f1a2e] dark:to-[#2a1e3f] transition-colors duration-300 relative overflow-hidden">
       <Navbar />
 
       {/* Hero Section */}
