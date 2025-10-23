@@ -262,6 +262,15 @@ export default function ComposePage() {
   maxDate.setFullYear(maxDate.getFullYear() + 10)
   const maxDateString = maxDate.toISOString().split('T')[0]
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault()
+      if (title.trim() && content.trim() && !loading) {
+        handleSubmit(e as any)
+      }
+    }
+  }
+
   return (
 
     <div className="max-w-4xl mx-auto space-y-8">
@@ -478,6 +487,7 @@ export default function ComposePage() {
             className="min-h-[300px] text-lg p-4 rounded-xl border-[#e9dff5] focus:border-[#c4a9db] focus:ring-[#c4a9db] dark:border-[#3a2d4f] dark:bg-[#251c36] dark:text-[#d8c5f0] dark:placeholder:text-[#8a7a9b] dark:focus:border-[#9f7fc0] dark:focus:ring-[#9f7fc0] resize-none"
             value={content}
             onChange={e => setContent(e.target.value)}
+            onKeyDown={handleKeyDown}
             required
           />
 
