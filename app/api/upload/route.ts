@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
-import { writeFile, mkdir } from 'fs/promises'
-import { join } from 'path'
 import { v4 as uuidv4 } from 'uuid'
 import { supabase } from '@/lib/supabase'
+import { withRateLimit } from '@/lib/rate-limit-middleware'
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
 
-export async function POST(req: NextRequest) {
+async function uploadFile(req: NextRequest) {
   try {
     // Check authentication
     const { userId } = await auth()
@@ -71,7 +70,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Return the public URL
-    const {data: urlData} = supabase.storage.from('capsule-images').getPublicUrl(fileName)
+    const { data: urlData } = supabase.storage.from('capsule-images').getPublicUrl(fileName)
     const fileUrl = urlData.publicUrl
 
     return NextResponse.json({
@@ -85,8 +84,6 @@ export async function POST(req: NextRequest) {
       }
     })
 
-    
-
   } catch (error: any) {
     console.error('Image upload error:', error)
     return NextResponse.json(
@@ -94,4 +91,9 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     )
   }
-} 
+}
+
+// Apply rate limiting to the POST handler
+export const POST = withRateLimit(uploadFile, {
+  customEndpoint: '/api/upload'
+}) 

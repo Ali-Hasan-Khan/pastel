@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
+import { withRateLimit } from '@/lib/rate-limit-middleware'
 
 function computeEmotionalScore(text: string): number {
     if (!text) return 5;
@@ -14,14 +15,21 @@ function computeEmotionalScore(text: string): number {
     return ((clamped + 5) / 10) * 10; // 0–10
 }
 
-export async function GET(_req: NextRequest) {
-    const { userId } = await auth();
-    if (!userId) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+async function getAnalyticsHeatmap(_req: NextRequest) {
+    const { userId: clerkId } = await auth();
+    if (!clerkId) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+
+    // Find or create user to get the database user ID
+    const user = await prisma.user.upsert({
+        where: { clerkId },
+        update: {},
+        create: { clerkId, plan: 'FREE' }
+    });
 
     const since = new Date();
     since.setDate(since.getDate() - 365);
     const capsules = await prisma.capsule.findMany({
-        where: { userId, createdAt: { gte: since } },
+        where: { userId: user.id, createdAt: { gte: since } },
         select: { content: true, createdAt: true },
         orderBy: { createdAt: "asc" },
     });
@@ -51,3 +59,8 @@ export async function GET(_req: NextRequest) {
 
     return NextResponse.json({ success: true, data: { days } });
 }
+
+// Apply rate limiting to the GET handler
+export const GET = withRateLimit(getAnalyticsHeatmap, {
+    customEndpoint: '/api/analytics'
+})

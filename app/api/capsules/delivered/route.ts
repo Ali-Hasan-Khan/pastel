@@ -4,17 +4,25 @@ import { prisma } from "@/lib/prisma"
 
 export async function GET(request: NextRequest) {
     try {
-        const { userId } = await auth()
-        if (!userId) {
+        const { userId: clerkId } = await auth()
+        if (!clerkId) {
             return NextResponse.json(
                 { success: false, error: 'Unauthorized' },
                 { status: 401 }
             )
         }
+
+        // Find or create user to get the database user ID
+        const user = await prisma.user.upsert({
+            where: { clerkId },
+            update: {},
+            create: { clerkId, plan: 'FREE' }
+        })
+
         const capsules = await prisma.capsule.findMany({
             where: {
                 status: 'delivered',
-                userId: userId
+                userId: user.id
             }
         })
 

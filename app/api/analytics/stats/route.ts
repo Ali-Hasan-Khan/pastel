@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from '@clerk/nextjs/server'
 import { prisma } from "@/lib/prisma"
+import { withRateLimit } from '@/lib/rate-limit-middleware'
 
 function computeEmotionalScore(text: string): number {
     if (!text) return 5;
@@ -24,21 +25,28 @@ function computeEmotionalScore(text: string): number {
     return ((normalized + 5) / 10) * 10;
 }
 
-
-export async function GET(request: NextRequest) {
-    const { userId } = await auth()
-    if (!userId) {
+async function getAnalyticsStats(request: NextRequest) {
+    const { userId: clerkId } = await auth()
+    if (!clerkId) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
+
+    // Find or create user to get the database user ID
+    const user = await prisma.user.upsert({
+        where: { clerkId },
+        update: {},
+        create: { clerkId, plan: 'FREE' }
+    })
+
     const capsules = await prisma.capsule.findMany({
-        where: { userId: userId },
+        where: { userId: user.id },
         select: { content: true, aiReflection: true }
     })
     const totalMemories = capsules.length
     let emotionalScore = 5
-    if(totalMemories>0){
+    if (totalMemories > 0) {
         const scores = capsules.map(c => computeEmotionalScore(c.content))
-        emotionalScore = scores.reduce((a,b) => a+b, 0)/scores.length
+        emotionalScore = scores.reduce((a, b) => a + b, 0) / scores.length
     }
     const aiInsights = capsules.reduce((acc, c) => acc + (c.aiReflection && c.aiReflection.length > 0 ? 1 : 0), 0)
 
@@ -52,3 +60,8 @@ export async function GET(request: NextRequest) {
     }
     return NextResponse.json({ success: true, data: stats })
 }
+
+// Apply rate limiting to the GET handler
+export const GET = withRateLimit(getAnalyticsStats, {
+    customEndpoint: '/api/analytics'
+})

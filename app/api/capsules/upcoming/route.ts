@@ -5,20 +5,27 @@ import { prisma } from '@/lib/prisma'
 export async function GET() {
   try {
     // Get the current user's ID from Clerk
-    const { userId } = await auth()
+    const { userId: clerkId } = await auth()
     
-    if (!userId) {
+    if (!clerkId) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized' }, 
         { status: 401 }
       )
     }
 
+    // Find or create user to get the database user ID
+    const user = await prisma.user.upsert({
+      where: { clerkId },
+      update: {},
+      create: { clerkId, plan: 'FREE' }
+    })
+
     // Fetch upcoming capsules for the authenticated user
     const now = new Date()
     const upcomingCapsules = await prisma.capsule.findMany({
       where: {
-        userId: userId,
+        userId: user.id, // Use the database user ID, not clerkId
         deliveryDate: {
           gt: now, // Greater than current date/time
         },
@@ -48,4 +55,4 @@ export async function GET() {
       { status: 500 }
     )
   }
-} 
+}

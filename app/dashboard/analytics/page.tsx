@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { LineChart, BarChart, Calendar, Heart, Sparkles, Clock, Info } from "lucide-react"
+import { LineChart, BarChart, Calendar, Heart, Sparkles, Clock, Info, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { LoadingSpinnerWithText } from "@/components/ui/loading-spinner"
@@ -37,24 +37,67 @@ export default function AnalyticsPage() {
     emotionalScore: 0,
     aiInsights: 0,
   })
+  const [rateLimitError, setRateLimitError] = useState<string | null>(null)
+  const [retryAfter, setRetryAfter] = useState<number | null>(null)
 
-  useEffect(() => {
-    const fetchStats = async () => {
+  const fetchStats = async () => {
+    try {
+      setRateLimitError(null)
       const response = await fetch("/api/analytics/stats")
+
+      if (response.status === 429) {
+        const retryAfterHeader = response.headers.get('Retry-After')
+        const retryAfterSeconds = retryAfterHeader ? parseInt(retryAfterHeader) : 3600
+        setRetryAfter(retryAfterSeconds)
+        setRateLimitError(`Rate limit exceeded. Please try again in ${Math.ceil(retryAfterSeconds / 60)} minutes.`)
+        setLoading(false)
+        return
+      }
+
       const result = await response.json()
       if (result.success) {
-        setLoading(false)
         setStats(result.data)
-        const fetchHeatmap = async () => {
-          const res = await fetch('/api/analytics/heatmap');
-          const json = await res.json();
-          if (json.success) {
-            setHeatmap(json.data.days);
-          }
-        }
-        fetchHeatmap()
+        await fetchHeatmap()
+      } else {
+        setRateLimitError('Failed to load analytics data')
+        setLoading(false)
       }
+    } catch (error) {
+      console.error('Error fetching stats:', error)
+      setRateLimitError('Failed to load analytics data')
+      setLoading(false)
     }
+  }
+
+  const fetchHeatmap = async () => {
+    try {
+      const res = await fetch('/api/analytics/heatmap');
+
+      if (res.status === 429) {
+        const retryAfterHeader = res.headers.get('Retry-After')
+        const retryAfterSeconds = retryAfterHeader ? parseInt(retryAfterHeader) : 3600
+        setRetryAfter(retryAfterSeconds)
+        setRateLimitError(`Rate limit exceeded. Please try again in ${Math.ceil(retryAfterSeconds / 60)} minutes.`)
+        setLoading(false)
+        return
+      }
+
+      const json = await res.json();
+      if (json.success) {
+        setHeatmap(json.data.days);
+        setLoading(false)
+      } else {
+        setRateLimitError('Failed to load heatmap data')
+        setLoading(false)
+      }
+    } catch (error) {
+      console.error('Error fetching heatmap:', error)
+      setRateLimitError('Failed to load heatmap data')
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
     fetchStats()
   }, [])
 
@@ -62,6 +105,12 @@ export default function AnalyticsPage() {
     console.log("days: ", heatmap.slice(-10))
   }
 
+  const handleRetry = () => {
+    setLoading(true)
+    setRateLimitError(null)
+    setRetryAfter(null)
+    fetchStats()
+  }
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 relative">
@@ -76,6 +125,38 @@ export default function AnalyticsPage() {
           </div>
         </motion.div>
       )}
+
+      {/* Rate Limit Error Banner */}
+      {rateLimitError && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 mr-3" />
+              <div>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
+                  Rate Limit Exceeded
+                </h3>
+                <p className="text-sm text-red-700 dark:text-red-300 mt-1">
+                  {rateLimitError}
+                </p>
+              </div>
+            </div>
+            <Button
+              onClick={handleRetry}
+              variant="outline"
+              size="sm"
+              className="text-red-700 dark:text-red-300 border-red-300 dark:border-red-700 hover:bg-red-100 dark:hover:bg-red-900/30"
+            >
+              Try Again
+            </Button>
+          </div>
+        </motion.div>
+      )}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">
@@ -176,7 +257,22 @@ export default function AnalyticsPage() {
           </div>
           {/* Emotional Heatmap Chart */}
           <div className="h-[300px] bg-[#f9f5f2] dark:bg-[#251c36] rounded-lg flex flex-col items-center justify-center relative px-2">
-            {!heatmap ? (
+            {rateLimitError ? (
+              <div className="flex flex-col items-center justify-center w-full h-full">
+                <AlertCircle className="w-8 h-8 text-red-500 dark:text-red-400 mb-2" />
+                <p className="text-[#8a7a9b] dark:text-[#a99bc1] text-center">
+                  Unable to load heatmap data due to rate limiting
+                </p>
+                <Button
+                  onClick={handleRetry}
+                  variant="outline"
+                  size="sm"
+                  className="mt-3 text-red-700 dark:text-red-300 border-red-300 dark:border-red-700 hover:bg-red-100 dark:hover:bg-red-900/30"
+                >
+                  Try Again
+                </Button>
+              </div>
+            ) : !heatmap ? (
               <div className="flex items-center justify-center w-full h-full">
                 <p className="text-[#8a7a9b] dark:text-[#a99bc1]">Loading…</p>
               </div>
