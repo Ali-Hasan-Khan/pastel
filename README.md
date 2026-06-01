@@ -42,13 +42,13 @@ Getting started (for developers)
    git clone https://github.com/Ali-Hasan-Khan/pastel.git
 2. Install dependencies
 
-   pnpm install
+   npm install
 3. Copy and configure environment variables
 
    cp .env.example .env
 4. Start the development server
 
-   pnpm dev
+   npm dev
 
 For production deployment, follow the deployment guide in the repo and ensure required environment variables and database credentials are configured in your hosting provider.
 
