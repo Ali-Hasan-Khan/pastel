@@ -10,6 +10,10 @@ Pastel is a privacy-first, production-ready journaling application that lets use
 - Thoughtful UX: Clean journaling interface with optional media attachments and analytics for user progress.
 - Extensible stack: Type-safe codebase and modular integrations for email and AI services.
 
+## Architecture
+<img width="1033" height="545" alt="image" src="https://github.com/user-attachments/assets/b10d74d8-e892-461f-a6f4-1e280b0e3cb9" />
+
+
 ## Core features
 
 - Write and schedule time-capsule memories to be delivered at a chosen future date.
