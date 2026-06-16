@@ -11,7 +11,8 @@ Pastel is a privacy-first, production-ready journaling application that lets use
 - Extensible stack: Type-safe codebase and modular integrations for email and AI services.
 
 ## Architecture
-<img width="1033" height="545" alt="image" src="https://github.com/user-attachments/assets/b10d74d8-e892-461f-a6f4-1e280b0e3cb9" />
+<img width="4193" height="2181" alt="Untitled Diagram-2026-06-16T15-31-23" src="https://github.com/user-attachments/assets/deeb54d0-468e-435f-b73e-1518e24d0b26" />
+
 
 
 ## Core features
