@@ -23,34 +23,43 @@ export default function Testimonials() {
   ]
 
   return (
-    <section id="testimonials" className="container mx-auto px-4 py-16 md:py-24">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-4 text-center">
+    <section id="testimonials" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <motion.div
+        className="text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-accent/50 px-4 py-1.5 text-sm font-medium text-muted-foreground">
+          Loved by memory keepers
+        </span>
+        <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
           What People Are Saying
         </h2>
-        <p className="text-xl text-[#8a7a9b] dark:text-[#a99bc1] mb-16 text-center max-w-3xl mx-auto">
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
           Join thousands who are preserving their memories with Pastel.
         </p>
+      </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className="bg-white dark:bg-[#2a1e3f] rounded-2xl p-8 shadow-md border border-[#e9dff5] dark:border-[#3a2d4f] flex flex-col"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <Quote className="w-10 h-10 text-[#c4a9db] dark:text-[#9f7fc0] mb-4" />
-              <p className="text-[#6b5c7c] dark:text-[#d8c5f0] mb-6 grow italic">"{testimonial.quote}"</p>
-              <div>
-                <p className="font-semibold text-[#6b5c7c] dark:text-[#d8c5f0]">{testimonial.author}</p>
-                <p className="text-sm text-[#8a7a9b] dark:text-[#a99bc1]">{testimonial.role}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+      <div className="mx-auto mt-16 grid max-w-5xl gap-6 md:grid-cols-3">
+        {testimonials.map((testimonial, index) => (
+          <motion.div
+            key={index}
+            className="flex flex-col rounded-2xl border border-border bg-card p-6 card-hover"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            <Quote className="h-8 w-8 text-primary/40 mb-4" />
+            <p className="flex-1 text-foreground leading-relaxed">&ldquo;{testimonial.quote}&rdquo;</p>
+            <div className="mt-6 pt-4 border-t border-border">
+              <p className="font-semibold text-foreground">{testimonial.author}</p>
+              <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </section>
   )

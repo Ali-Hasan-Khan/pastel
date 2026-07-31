@@ -1,66 +1,74 @@
-import { Edit3, Clock, Sparkles } from "lucide-react"
+"use client"
+
+import { motion } from "framer-motion"
+import { WriteIcon, ScheduleIcon, PerspectiveIcon } from "@/components/icons/brand-icons"
+
+const steps = [
+  {
+    icon: WriteIcon,
+    label: "01",
+    title: "Put it into words",
+    description: "Capture a moment exactly as it feels—without trying to make it perfect.",
+  },
+  {
+    icon: ScheduleIcon,
+    label: "02",
+    title: "Pick a future date",
+    description: "Choose when you want this memory to find its way back to you.",
+  },
+  {
+    icon: PerspectiveIcon,
+    label: "03",
+    title: "Receive fresh perspective",
+    description: "Reconnect with your words and notice how far you've come.",
+  },
+]
 
 export default function HowItWorks() {
-  const steps = [
-    {
-      icon: <Edit3 className="w-10 h-10 text-[#c4a9db] dark:text-[#9f7fc0]" />,
-      title: "Write a memory",
-      description: "Capture your thoughts, feelings, and experiences in our beautiful journaling interface.",
-    },
-    {
-      icon: <Clock className="w-10 h-10 text-[#a2d8c0] dark:text-[#7ab5a0]" />,
-      title: "Choose a future delivery date",
-      description: "Schedule when you want to receive your memory - next week, next year, or on a special date.",
-    },
-    {
-      icon: <Sparkles className="w-10 h-10 text-[#f0c3a0] dark:text-[#d1a078]" />,
-      title: "Let AI reflect on it when it's time",
-      description: "Our AI provides thoughtful insights on your emotional journey when your memory arrives.",
-    },
-  ]
-
   return (
-    <section id="how-it-works" className="container mx-auto px-4 py-16 md:py-24">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-4 text-center">
-          How It Works
+    <section id="how-it-works" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <motion.div
+        className="text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-accent/50 px-4 py-1.5 text-sm font-medium text-muted-foreground">
+          A simple ritual
+        </span>
+        <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+          Write now. Revisit later.
         </h2>
-        <p className="text-xl text-[#8a7a9b] dark:text-[#a99bc1] mb-16 text-center max-w-3xl mx-auto">
-          A simple process to preserve your memories and rediscover them when the time is right.
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+          Pastel makes room for reflection without asking you to keep up with another habit.
         </p>
+      </motion.div>
 
-        {/* Fixed height container to prevent layout shift */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="bg-white dark:bg-[#2a1e3f] rounded-2xl p-8 shadow-md border border-[#e9dff5] dark:border-[#3a2d4f] text-center hover:shadow-lg transition-shadow duration-300 how-it-works-card">
-              <div>
-                {/* Fixed size icon container */}
-                <div 
-                  className="w-20 h-20 mx-auto bg-[#f9f5f2] dark:bg-[#3a2d4f] rounded-full flex items-center justify-center mb-6"
-                  style={{ minHeight: '80px' }} // Ensure consistent height
-                >
-                  {step.icon}
-                </div>
-                
-                {/* Fixed height text container */}
-                <div style={{ minHeight: '120px' }}>
-                  <h3 className="text-xl font-semibold text-[#6b5c7c] dark:text-[#d8c5f0] mb-4">
-                    {step.title}
-                  </h3>
-                  <p className="text-[#8a7a9b] dark:text-[#a99bc1] leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
+      <div className="mx-auto mt-16 grid max-w-5xl gap-6 md:grid-cols-3">
+        {steps.map(({ icon: Icon, ...step }, index) => (
+          <motion.article
+            key={step.label}
+            className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 card-hover"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 text-primary ring-1 ring-primary/20 transition-transform duration-300 group-hover:scale-105">
+                <Icon className="h-7 w-7" />
               </div>
+              <span className="font-mono text-xs font-medium text-muted-foreground">
+                {step.label}
+              </span>
             </div>
-          ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <div className="h-0.5 w-24 bg-gradient-to-r from-[#c4a9db] to-[#a2d8c0] dark:from-[#9f7fc0] dark:to-[#7ab5a0] mx-auto"></div>
-        </div>
+            <h3 className="mt-6 text-xl font-semibold tracking-tight text-foreground">
+              {step.title}
+            </h3>
+            <p className="mt-3 leading-relaxed text-muted-foreground">{step.description}</p>
+          </motion.article>
+        ))}
       </div>
     </section>
   )

@@ -1,206 +1,203 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { ChevronRight } from "lucide-react"
-import MemoryPreview from "@/components/memory-preview"
-import HowItWorks from "@/components/how-it-works"
-import Features from "@/components/features"
-import Testimonials from "@/components/testimonials"
-import Navbar from "@/components/navbar"
-import Pricing from "@/components/pricing"
+import { ArrowRight, Check, Play } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { SignedIn, SignedOut } from "@clerk/nextjs"
-import SplitText from "@/components/ui/animations/splittext"
-import { Footer } from "@/components/ui/footer"
+import { Button } from "@/components/ui/button"
+import Navbar from "@/components/navbar"
+import HowItWorks from "@/components/how-it-works"
+import Features from "@/components/features"
+import MemoryPreview from "@/components/memory-preview"
+import Testimonials from "@/components/testimonials"
+import Pricing from "@/components/pricing"
 import { FAQ } from "@/components/faq"
+import { Footer } from "@/components/ui/footer"
+import { motion } from "framer-motion"
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+}
+
+const stagger = {
+  animate: {
+    transition: { staggerChildren: 0.1 },
+  },
+}
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-b from-accent to-[#f5f0f9] dark:from-[#1f1a2e] dark:to-[#2a1e3f] transition-colors duration-300 relative overflow-hidden">
+    <main className="overflow-hidden">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-20 pb-16 md:pt-32 md:pb-24 text-center">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col max-w-2xl mx-auto items-center">
-            <SplitText
-              text="A gentle space to preserve your past, for the future."
-              className="mt-6 sm:mt-0 text-4xl md:text-5xl lg:text-6xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-0 leading-tight"
-              delay={100}
-              duration={0.6}
-              ease="power3.out"
-              splitType="lines"
-              from={{ opacity: 0, y: 40 }}
-              to={{ opacity: 1, y: 0 }}
-              threshold={0.1}
-              rootMargin="-100px"
-              textAlign="center"
-            />
-            <SplitText
-              text="Capture the now. Open it later."
-              className="text-xl md:text-2xl text-[#8a7a9b] dark:text-[#a99bc1] mt-6 mb-10 homemade-apple-regular"
-              delay={100}
-              duration={0.6}
-              splitType="lines"
-            />
-          </div>
-          {/* Fixed height container for buttons and image */}
-          <div className="h-auto flex flex-col max-w-2xl mx-auto justify-between items-center">
-            {/* Button container with fixed height */}
-            <div className="h-16 flex flex-col sm:flex-row justify-center gap-4 mb-0">
+      <section className="relative pt-28 pb-16 sm:pt-36 sm:pb-24">
+        <div className="absolute inset-0 bg-gradient-radial-accent pointer-events-none" />
+        <div className="absolute inset-0 bg-grid opacity-[0.03] pointer-events-none" />
+
+        <motion.div
+          className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+          variants={stagger}
+          initial="initial"
+          animate="animate"
+        >
+          <div className="mx-auto max-w-4xl text-center">
+            <motion.div
+              variants={fadeInUp}
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-accent/50 px-4 py-1.5 text-sm font-medium text-muted-foreground mb-8"
+            >
+              <span className="flex h-2 w-2 rounded-full bg-primary" />
+              A private place for your life in progress
+            </motion.div>
+
+            <motion.h1
+              variants={fadeInUp}
+              className="text-balance text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl"
+            >
+              Make today{" "}
+              <span className="text-gradient">worth revisiting</span>
+              <span className="text-foreground">.</span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeInUp}
+              className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground sm:text-xl"
+            >
+              Pastel helps you capture the moments that matter, then returns them when they can mean something new.
+            </motion.p>
+
+            <motion.div
+              variants={fadeInUp}
+              className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            >
               <SignedIn>
-                <Link href="/dashboard">
-                  <Button
-                    size="lg"
-                    className="group relative bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-500 hover:shadow-xl hover:shadow-[#c4a9db]/25 hover:-translate-y-0.5 w-full sm:w-auto overflow-hidden"
-                  >
-                    {/* Subtle shimmer effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-
-                    {/* Gentle glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8f7]/20 to-[#e9f5f0]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                    <span className="relative z-10 transition-transform duration-300 group-hover:scale-105">
-                      Go to Dashboard
-                    </span>
-                    <ChevronRight className="ml-2 h-5 w-5 relative z-10 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110" />
-                  </Button>
-                </Link>
+                <Button asChild size="lg" className="h-12 px-6 text-base rounded-xl">
+                  <Link href="/dashboard">Open your space <ArrowRight className="h-4 w-4" /></Link>
+                </Button>
               </SignedIn>
               <SignedOut>
-                <Link href="/dashboard">
-                  <Button
-                    size="lg"
-                    className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
-                  >
-                    Get Started
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-[#c4a9db] text-[#6b5c7c] hover:bg-[#f0e8f7] dark:border-[#9f7fc0] dark:text-[#d8c5f0] dark:hover:bg-[#3a2d4f] rounded-xl px-8 py-6 text-lg"
-                >
-                  Learn More
+                <Button asChild size="lg" className="h-12 px-6 text-base rounded-xl shadow-sm">
+                  <Link href="/dashboard">Start writing for free <ArrowRight className="h-4 w-4" /></Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="h-12 px-5 text-base rounded-xl">
+                  <Link href="#how-it-works"><Play className="h-4 w-4" /> See how it works</Link>
                 </Button>
               </SignedOut>
-            </div>
+            </motion.div>
 
-
+            <motion.div
+              variants={fadeInUp}
+              className="mt-6 flex items-center justify-center gap-6 text-sm text-muted-foreground"
+            >
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-primary" /> Private by default
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-primary" /> No credit card
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-primary" /> Free to start
+              </span>
+            </motion.div>
           </div>
-          {/* Image container */}
-          <div className="relative m-4">
-            <div className="absolute inset-0 bg-[#e2d5f0] dark:bg-[#3a2d4f] rounded-3xl transform rotate-1 translate-x-1 translate-y-1"></div>
-            <div className="relative bg-white dark:bg-[#2a1e3f] rounded-3xl shadow-lg overflow-hidden border border-[#e9dff5] dark:border-[#3a2d4f] p-4">
+
+          <motion.div
+            variants={fadeInUp}
+            className="mx-auto mt-16 max-w-6xl"
+          >
+            <div className="relative rounded-2xl border border-border bg-background p-2 shadow-xl">
+              <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+                <div className="flex gap-1.5">
+                  <div className="h-3 w-3 rounded-full bg-red-400" />
+                  <div className="h-3 w-3 rounded-full bg-yellow-400" />
+                  <div className="h-3 w-3 rounded-full bg-green-400" />
+                </div>
+                <span className="ml-3 text-xs text-muted-foreground">pastel.app / your memories</span>
+              </div>
               <Image
                 src="/placeholder-light.png"
-                alt="Pastel app interface mockup"
-                width={800}
-                height={500}
-                priority={true}
-                className="w-full rounded-2xl block dark:hidden"
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                alt="Pastel workspace showing a personal memory timeline"
+                width={1200}
+                height={750}
+                priority
+                className="w-full rounded-b-lg dark:hidden"
               />
               <Image
                 src="/placeholder-dark.png"
-                alt="Pastel app interface mockup"
-                width={800}
-                height={500}
-                priority={true}
-                className="w-full rounded-2xl hidden dark:block"
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                alt="Pastel workspace showing a personal memory timeline"
+                width={1200}
+                height={750}
+                priority
+                className="hidden w-full rounded-b-lg dark:block"
               />
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* How It Works Section */}
-      <HowItWorks />
+      <section className="border-y border-border bg-muted/50 py-5">
+        <p className="mx-auto max-w-7xl px-4 text-center text-sm font-medium text-muted-foreground sm:px-6 lg:px-8">
+          A calmer way to journal, reflect, and remember the life you&apos;re building.
+        </p>
+      </section>
 
-      {/* Features Section */}
+      <HowItWorks />
       <Features />
 
-      {/* Preview Component */}
-      <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-12 text-center">
-            Create Your First Memory
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-accent/50 px-4 py-1.5 text-sm font-medium text-muted-foreground mb-4">
+            Your first letter
+          </span>
+          <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+            Leave something meaningful for future you.
           </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+            Write it now, choose when it returns, and let a little distance make it clearer.
+          </p>
+        </motion.div>
+        <div className="mx-auto mt-12 max-w-5xl">
           <MemoryPreview />
         </div>
       </section>
 
-      {/* Testimonials */}
       <Testimonials />
-
-      {/* Pricing Section */}
       <Pricing />
-
-      {/* FAQ Section */}
       <FAQ />
 
-      {/* Call to Action Footer */}
-      <section className="container mx-auto px-4 py-16 md:py-24 text-center">
-        <div className="max-w-3xl mx-auto bg-[#f0e8f7] dark:bg-[#2a1e3f] rounded-3xl p-8 md:p-12 shadow-md">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-6">
-            Begin your first time capsule today.
-          </h2>
-          <p className="text-lg text-[#8a7a9b] dark:text-[#a99bc1] mb-8">
-            Start preserving your memories and emotions for your future self to rediscover.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <SignedIn>
+      <section className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/90 to-primary px-6 py-16 text-center shadow-xl sm:py-24">
+          <div className="absolute inset-0 bg-grid opacity-[0.04]" />
+          <div className="relative">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/80">
+              Your story is already happening
+            </span>
+            <h2 className="mt-6 text-balance text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              Give it a place to live.
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-white/70">
+              Start with one thought. Future you will be glad you did.
+            </p>
+            <Button
+              asChild
+              size="lg"
+              className="mt-8 h-12 bg-white px-6 text-base text-zinc-900 hover:bg-white/90 rounded-xl shadow-sm"
+            >
               <Link href="/dashboard">
-                <Button
-                  size="lg"
-                  className="group relative bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-500 hover:shadow-xl hover:shadow-[#c4a9db]/25 hover:-translate-y-0.5 w-full sm:w-auto overflow-hidden"
-                >
-                  {/* Subtle shimmer effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-
-                  {/* Gentle glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8f7]/20 to-[#e9f5f0]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  <span className="relative z-10 transition-transform duration-300 group-hover:scale-105">
-                    Go to Dashboard
-                  </span>
-                  <ChevronRight className="ml-2 h-5 w-5 relative z-10 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110" />
-                </Button>
+                Create your first memory <ArrowRight className="h-4 w-4" />
               </Link>
-            </SignedIn>
-            <SignedOut>
-              <Link href="/dashboard">
-                <Button
-                  size="lg"
-                  className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl px-8 py-6 text-lg shadow-md transition-all duration-300 hover:shadow-lg w-full sm:w-auto"
-                >
-                  Get Started
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="#features">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-[#c4a9db] text-[#6b5c7c] hover:bg-[#f0e8f7] dark:border-[#9f7fc0] dark:text-[#d8c5f0] dark:hover:bg-[#3a2d4f] rounded-xl px-8 py-6 text-lg"
-                >
-                  Explore Features
-                </Button>
-              </Link>
-            </SignedOut>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
       <Footer />
-
-    </div>
+    </main>
   )
 }
-
