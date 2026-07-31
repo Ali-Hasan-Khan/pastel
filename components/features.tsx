@@ -1,54 +1,79 @@
-import { Paintbrush, Calendar, Sparkles, BarChart4 } from "lucide-react"
+"use client"
+
+import { motion } from "framer-motion"
+import {
+  DeliveryIcon,
+  ReflectionsIcon,
+  ContextIcon,
+  LockHeartIcon,
+} from "@/components/icons/brand-icons"
+
+const features = [
+  {
+    icon: DeliveryIcon,
+    title: "Thoughtful delivery",
+    description: "Schedule a memory for a meaningful date, or simply let surprise do its work.",
+  },
+  {
+    icon: ReflectionsIcon,
+    title: "Gentle reflections",
+    description: "See patterns in your writing with prompts designed for insight, not judgment.",
+  },
+  {
+    icon: ContextIcon,
+    title: "A life in context",
+    description: "Notice emotional rhythms and personal milestones as your archive grows.",
+  },
+  {
+    icon: LockHeartIcon,
+    title: "Yours, always",
+    description: "Your memories remain private—a personal archive built around trust.",
+  },
+]
 
 export default function Features() {
-  const features = [
-    {
-      icon: <Paintbrush className="w-6 h-6 text-[#c4a9db] dark:text-[#9f7fc0]" />,
-      title: "Beautiful UI for journaling",
-      description: "A calming, distraction-free environment designed to help you express your thoughts and feelings.",
-    },
-    {
-      icon: <Calendar className="w-6 h-6 text-[#a2d8c0] dark:text-[#7ab5a0]" />,
-      title: "Schedule future deliveries",
-      description: "Choose when your memories will be delivered back to you - from days to years in the future.",
-    },
-    {
-      icon: <Sparkles className="w-6 h-6 text-[#f0c3a0] dark:text-[#d1a078]" />,
-      title: "AI reflections over time",
-      description: "Receive thoughtful AI-generated insights about your emotional journey when memories are delivered.",
-    },
-    {
-      icon: <BarChart4 className="w-6 h-6 text-[#c4a9db] dark:text-[#9f7fc0]" />,
-      title: "Emotional tracking heatmap",
-      description: "Visualize your emotional patterns and growth over time with our intuitive heatmap.",
-    },
-  ]
-
   return (
-    <section id="features" className="container mx-auto px-4 py-16 md:py-24 bg-[#f9f5f2] dark:bg-[#1f1a2e] rounded-2xl">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#6b5c7c] dark:text-[#d8c5f0] mb-4 text-center">Features</h2>
-        <p className="text-xl text-[#8a7a9b] dark:text-[#a99bc1] mb-16 text-center max-w-3xl mx-auto">
-          Tools designed to help you capture, preserve, and reflect on your personal journey.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white dark:bg-[#2a1e3f] rounded-2xl p-8 shadow-md border border-[#e9dff5] dark:border-[#3a2d4f] flex hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="mr-6 mt-1">
-                <div className="w-12 h-12 bg-[#f0e8f7] dark:bg-[#3a2d4f] rounded-xl flex items-center justify-center">
-                  {feature.icon}
+    <section id="features" className="border-y border-border bg-muted/30">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
+          <motion.div
+            className="text-left"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-accent/50 px-4 py-1.5 text-sm font-medium text-muted-foreground">
+              Built for the long view
+            </span>
+            <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+              A journal that gives something back.
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              More than a place to save thoughts—it is a way to meet them again with the perspective
+              you didn&apos;t have before.
+            </p>
+          </motion.div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {features.map(({ icon: Icon, title, description }, index) => (
+              <motion.article
+                key={title}
+                className="group rounded-2xl border border-border bg-card p-6 card-hover"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15 transition-transform duration-300 group-hover:scale-105">
+                  <Icon className="h-6 w-6" />
                 </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-[#6b5c7c] dark:text-[#d8c5f0] mb-2">{feature.title}</h3>
-                <p className="text-[#8a7a9b] dark:text-[#a99bc1]">{feature.description}</p>
-              </div>
-            </div>
-          ))}
+                <h3 className="mt-4 font-semibold text-foreground">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {description}
+                </p>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

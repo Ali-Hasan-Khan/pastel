@@ -13,120 +13,129 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
+import { Menu, X } from "lucide-react";
+
+const navLinks = [
+  { href: "#features", label: "Features" },
+  { href: "#how-it-works", label: "How It Works" },
+  { href: "#testimonials", label: "Testimonials" },
+  { href: "#pricing", label: "Pricing" },
+];
 
 export default function Navbar() {
   const { isLoaded, isSignedIn } = useUser();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      setIsScrolled(currentScrollY > 50);
-      setLastScrollY(currentScrollY);
+      setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   return (
     <header
-      className={`fixed left-0 right-0 mx-4 md:mx-8 z-50 transition-all duration-300 ease-in-out translate-y-0 opacity-100
-    ${
-      isScrolled
-        ? "bg-white/95 dark:bg-[#1f1a2e]/95 backdrop-blur-md shadow-lg border border-[#e9dff5] dark:border-[#3a2d4f] rounded-2xl mt-2"
-        : "bg-transparent"
-    }`}
+      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/80 backdrop-blur-xl border-b border-border"
+          : "bg-transparent"
+      }`}
     >
-      <div
-        className={`container mx-auto px-2 md:px-4 transition-all duration-300 ${
-          isScrolled
-            ? "py-3"
-            : "py-3 mt-4 bg-white/40 dark:bg-accent rounded-2xl backdrop-blur-xl shadow-md"
-        }`}
-      >
-        <div className="flex items-center justify-between">
-          <div className="min-w-[160px]">
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/logo.png"
-                alt="pastel-logo"
-                width={isScrolled ? 40 : 50}
-                height={isScrolled ? 40 : 50}
-                className="transition-all duration-300"
-              />
-              <span
-                className={`font-bold text-[#6b5c7c] dark:text-[#d8c5f0] transition-all duration-300 ${
-                  isScrolled ? "text-xl" : "text-2xl"
-                }`}
-              >
-                Pastel
-              </span>
+      <div className="mx-auto grid h-16 max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="flex items-center gap-2 shrink-0">
+          <Image
+            src="/logo.png"
+            alt="pastel-logo"
+            width={32}
+            height={32}
+            className="transition-all duration-300"
+          />
+          <span className="text-xl font-bold text-foreground">Pastel</span>
+        </Link>
+
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {link.label}
             </Link>
-          </div>
+          ))}
+        </nav>
 
-          <div className="flex-1 flex justify-center">
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link
-                href="#features"
-                className="text-[#8a7a9b] hover:text-[#6b5c7c] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] transition-colors"
-              >
-                Features
-              </Link>
-              <Link
-                href="#how-it-works"
-                className="text-[#8a7a9b] hover:text-[#6b5c7c] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] transition-colors"
-              >
-                How It Works
-              </Link>
-              <Link
-                href="#testimonials"
-                className="text-[#8a7a9b] hover:text-[#6b5c7c] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] transition-colors"
-              >
-                Testimonials
-              </Link>
-              <Link
-                href="#pricing"
-                className="text-[#8a7a9b] hover:text-[#6b5c7c] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] transition-colors"
-              >
-                Pricing
-              </Link>
-            </nav>
-          </div>
-
-          <div className="flex justify-end sm:max-w-[180px] sm:min-w-[180px]">
-            <ThemeToggle />
-            {!isSignedIn && (
-              <div className="flex items-center sm:min-w-[180px] space-x-1 mr-2 sm:mr-0 sm:space-x-4">
-                <SignedOut>
-                  <SignInButton>
-                    <Button
-                      variant="ghost"
-                      className="text-[#8a7a9b] hover:text-[#6b5c7c] hover:bg-[#f0e8f7] dark:text-[#a99bc1] dark:hover:text-[#d8c5f0] dark:hover:bg-[#3a2d4f]"
-                    >
-                      Log In
-                    </Button>
-                  </SignInButton>
-                  <SignUpButton>
-                    <Button className="bg-[#c4a9db] hover:bg-[#b397d0] text-white dark:bg-[#9f7fc0] dark:hover:bg-[#8a6aad] rounded-xl">
-                      Sign Up
-                    </Button>
-                  </SignUpButton>
-                </SignedOut>
-              </div>
-            )}
-            {isLoaded && isSignedIn && (
-              <div className="flex items-center space-x-1 mr-2 sm:mr-0 sm:space-x-4">
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
-              </div>
-            )}
-          </div>
+        <div className="flex items-center justify-end gap-2">
+          <ThemeToggle />
+          {!isLoaded ? (
+            <div
+              className="hidden sm:flex items-center gap-2 sm:w-[148px] justify-end"
+              aria-hidden="true"
+            />
+          ) : isSignedIn ? (
+            <div className="flex items-center sm:w-[148px] justify-end">
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
+          ) : (
+            <div className="hidden sm:flex items-center gap-2 sm:w-[148px] justify-end">
+              <SignedOut>
+                <SignInButton>
+                  <Button variant="ghost" size="sm" className="text-sm">
+                    Log In
+                  </Button>
+                </SignInButton>
+                <SignUpButton>
+                  <Button size="sm" className="text-sm rounded-lg">
+                    Sign Up
+                  </Button>
+                </SignUpButton>
+              </SignedOut>
+            </div>
+          )}
+          <button
+            className="md:hidden p-2 text-muted-foreground hover:text-foreground"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
+
+      {mobileOpen && (
+        <div className="md:hidden border-b border-border bg-background/95 backdrop-blur-xl">
+          <nav className="flex flex-col px-4 py-4 gap-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="flex gap-2 pt-2 border-t border-border">
+              <SignedOut>
+                <SignInButton>
+                  <Button variant="ghost" size="sm" className="flex-1">
+                    Log In
+                  </Button>
+                </SignInButton>
+                <SignUpButton>
+                  <Button size="sm" className="flex-1">
+                    Sign Up
+                  </Button>
+                </SignUpButton>
+              </SignedOut>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
