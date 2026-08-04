@@ -43,11 +43,14 @@ export const FAQ = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-accent/50 px-4 py-1.5 text-sm font-medium text-muted-foreground">
+        <span className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-primary">
+          <span className="h-px w-8 bg-primary/40" />
           Got questions?
+          <span className="h-px w-8 bg-primary/40" />
         </span>
-        <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-          Frequently Asked Questions
+        <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+          Frequently asked{" "}
+          <span className="font-display italic font-normal text-gradient">questions</span>.
         </h2>
       </motion.div>
 

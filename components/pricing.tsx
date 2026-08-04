@@ -59,11 +59,14 @@ export default function Pricing() {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-accent/50 px-4 py-1.5 text-sm font-medium text-muted-foreground">
+        <span className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-primary">
+          <span className="h-px w-8 bg-primary/40" />
           Simple pricing
+          <span className="h-px w-8 bg-primary/40" />
         </span>
-        <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-          Choose Your Journey
+        <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+          Choose{" "}
+          <span className="font-display italic font-normal text-gradient">your journey</span>.
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
           Select the perfect plan to preserve your memories and emotional journey.

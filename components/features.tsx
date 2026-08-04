@@ -33,44 +33,71 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="border-y border-border bg-muted/30">
+    <section id="features" className="scroll-mt-24 border-y border-border bg-muted/30">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
           <motion.div
-            className="text-left"
+            className="lg:col-span-5"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-accent/50 px-4 py-1.5 text-sm font-medium text-muted-foreground">
+            <span className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-primary">
+              <span className="h-px w-8 bg-primary/40" />
               Built for the long view
             </span>
-            <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              A journal that gives something back.
+            <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+              A journal that{" "}
+              <span className="font-display italic font-normal text-gradient">
+                gives something back
+              </span>
+              .
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              More than a place to save thoughts—it is a way to meet them again with the perspective
-              you didn&apos;t have before.
+              More than a place to save thoughts—it is a way to meet them again with the
+              perspective you didn&apos;t have before.
             </p>
+            <div className="mt-8 flex items-center gap-6 border-t border-border pt-6">
+              <div>
+                <p className="text-2xl font-bold text-foreground">93%</p>
+                <p className="text-xs text-muted-foreground">feel more grateful after a year of letters</p>
+              </div>
+              <div className="h-8 w-px bg-border" />
+              <div>
+                <p className="text-2xl font-bold text-foreground">10k+</p>
+                <p className="text-xs text-muted-foreground">memories delivered to future selves</p>
+              </div>
+            </div>
           </motion.div>
-          <div className="grid gap-4 sm:grid-cols-2">
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
             {features.map(({ icon: Icon, title, description }, index) => (
               <motion.article
                 key={title}
-                className="group rounded-2xl border border-border bg-card p-6 card-hover"
+                className={`group rounded-2xl border border-border bg-card p-6 card-hover ${
+                  index === 0 ? "sm:col-span-2" : ""
+                }`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15 transition-transform duration-300 group-hover:scale-105">
-                  <Icon className="h-6 w-6" />
+                <div
+                  className={`flex items-center gap-4 ${
+                    index === 0 ? "sm:items-center" : "sm:block"
+                  }`}
+                >
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15 transition-transform duration-300 group-hover:scale-105">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <div className={index === 0 ? "sm:mt-0" : "sm:mt-4"}>
+                    <h3 className="font-semibold text-foreground">{title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="mt-4 font-semibold text-foreground">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {description}
-                </p>
               </motion.article>
             ))}
           </div>
