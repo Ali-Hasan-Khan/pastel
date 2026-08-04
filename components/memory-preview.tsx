@@ -20,7 +20,8 @@ export default function MemoryPreview() {
     >
       <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-6 md:p-8">
         <h3 className="text-2xl font-semibold tracking-tight text-foreground">
-          Write a letter to your future self
+          Write a letter to your{" "}
+          <span className="font-display italic font-normal text-gradient">future self</span>
         </h3>
         <p className="mt-2 text-muted-foreground">
           Capture your thoughts, feelings, and experiences. We&apos;ll deliver it back to you later.

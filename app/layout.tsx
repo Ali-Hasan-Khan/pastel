@@ -8,7 +8,7 @@ import {
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
-import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google"
+import { Plus_Jakarta_Sans, IBM_Plex_Mono, Instrument_Serif } from "next/font/google"
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -22,6 +22,14 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-mono"
+})
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  display: "swap",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-display"
 })
 
 export const metadata = {
@@ -69,7 +77,7 @@ export default function RootLayout({
           `
           }} />
         </head>
-        <body className={`${plusJakartaSans.variable} ${ibmPlexMono.variable} ${plusJakartaSans.className}`} suppressHydrationWarning>
+        <body className={`${plusJakartaSans.variable} ${ibmPlexMono.variable} ${instrumentSerif.variable} ${plusJakartaSans.className}`} suppressHydrationWarning>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
           </ThemeProvider>

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { v4 as uuidv4 } from "uuid";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 import { withRateLimit } from "@/lib/rate-limit-middleware";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -56,8 +56,10 @@ async function uploadFile(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Upload file to Supabase
-    const { data, error } = await supabase.storage
+    // Upload file to Supabase using the service-role key.
+    // The Clerk auth check above is the only way to reach this code,
+    // so Supabase RLS never needs to allow anonymous inserts.
+    const { data, error } = await supabaseAdmin.storage
       .from("pastel-memory-assets")
       .upload(fileName, buffer, {
         contentType: file.type,
@@ -74,7 +76,7 @@ async function uploadFile(req: NextRequest) {
     }
 
     // Return the public URL
-    const { data: urlData } = supabase.storage
+    const { data: urlData } = supabaseAdmin.storage
       .from("pastel-memory-assets")
       .getPublicUrl(fileName);
     const fileUrl = urlData.publicUrl;

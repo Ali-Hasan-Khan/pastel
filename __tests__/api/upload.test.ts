@@ -31,6 +31,14 @@ jest.mock('@/lib/supabase', () => ({
             })),
         },
     },
+    supabaseAdmin: {
+        storage: {
+            from: jest.fn(() => ({
+                upload: mockUpload,
+                getPublicUrl: mockGetPublicUrl,
+            })),
+        },
+    },
 }))
 
 const mockAuth = auth as jest.MockedFunction<typeof auth>

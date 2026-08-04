@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
 import { clerkClient } from '@clerk/nextjs/server'
 import { sendCapsuleDeliveryEmail } from '../email'
-
-const prisma = new PrismaClient()
+import { prisma } from '../prisma'
 
 export interface DeliveryResult {
   success: boolean
