@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { motion } from "framer-motion"
 import { Lock } from "lucide-react"
 
@@ -36,19 +35,19 @@ export default function MemoryPreview() {
 
         <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="w-full sm:w-auto">
-            <label className="block text-sm font-medium text-muted-foreground mb-2">Delivery Time</label>
-            <Select value={deliveryTime} onValueChange={setDeliveryTime}>
-              <SelectTrigger className="w-full sm:w-[180px] rounded-xl">
-                <SelectValue placeholder="Select time" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1 week">1 week</SelectItem>
-                <SelectItem value="1 month">1 month</SelectItem>
-                <SelectItem value="3 months">3 months</SelectItem>
-                <SelectItem value="6 months">6 months</SelectItem>
-                <SelectItem value="1 year">1 year</SelectItem>
-              </SelectContent>
-            </Select>
+            <label htmlFor="delivery-time" className="block text-sm font-medium text-muted-foreground mb-2">Delivery Time</label>
+            <select
+              id="delivery-time"
+              value={deliveryTime}
+              onChange={(e) => setDeliveryTime(e.target.value)}
+              className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-xl border border-input bg-card px-3 py-2 text-sm shadow-xs focus:border-primary focus:outline-hidden focus:ring-1 focus:ring-primary sm:w-[180px]"
+            >
+              <option value="1 week">1 week</option>
+              <option value="1 month">1 month</option>
+              <option value="3 months">3 months</option>
+              <option value="6 months">6 months</option>
+              <option value="1 year">1 year</option>
+            </select>
           </div>
 
           <div className="mt-auto w-full sm:w-auto">

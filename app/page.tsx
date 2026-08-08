@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Check, Play } from "lucide-react"
+import { ArrowRight, ArrowUpRight, Check } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { SignedIn, SignedOut } from "@clerk/nextjs"
@@ -13,19 +13,87 @@ import Testimonials from "@/components/testimonials"
 import Pricing from "@/components/pricing"
 import { FAQ } from "@/components/faq"
 import { Footer } from "@/components/ui/footer"
-import { DeliveryIcon, ScheduleIcon } from "@/components/icons/brand-icons"
-import { motion } from "framer-motion"
+import {
+  DeliveryIcon,
+  ScheduleIcon,
+  WriteIcon,
+  PerspectiveIcon,
+} from "@/components/icons/brand-icons"
+import { motion, useReducedMotion } from "framer-motion"
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
+function Letters({
+  text,
+  className = "",
+  letterClassName = "",
+  delay = 0,
+}: {
+  text: string
+  className?: string
+  letterClassName?: string
+  delay?: number
+}) {
+  const reduceMotion = useReducedMotion()
+
+  if (reduceMotion) {
+    return <span className={`${className} ${letterClassName}`}>{text}</span>
+  }
+
+  return (
+    <span className={`${className} inline-block`} aria-label={text} role="text">
+      {text.split("").map((char, i) => (
+        <motion.span
+          key={`${char}-${i}`}
+          aria-hidden="true"
+          className={`inline-block will-change-transform ${letterClassName}`}
+          initial={{ opacity: 0, y: "0.6em" }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.7,
+            delay: delay + i * 0.022,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  )
 }
 
-const stagger = {
-  animate: {
-    transition: { staggerChildren: 0.12 },
+const quickActions = [
+  {
+    icon: WriteIcon,
+    title: "Write a letter",
+    description: "Capture a moment exactly as it feels.",
+    href: "/dashboard",
+    image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=600&q=80",
+    alt: "Writing a letter in a notebook",
   },
-}
+  {
+    icon: ScheduleIcon,
+    title: "Choose a date",
+    description: "Decide when it finds its way back.",
+    href: "/dashboard/compose",
+    image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80",
+    alt: "Planning a date in a calendar with a pen",
+  },
+  {
+    icon: PerspectiveIcon,
+    title: "Gain perspective",
+    description: "Revisit with the wisdom of distance.",
+    href: "/dashboard",
+    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80",
+    alt: "A serene landscape to reflect on",
+  },
+  {
+    icon: DeliveryIcon,
+    title: "Remember what matters",
+    description: "Let a little time make it clearer.",
+    href: "/dashboard/archive",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+    alt: "A peaceful beach at sunset",
+  },
+]
 
 const marqueeItems = [
   "Letters to your future self",
@@ -62,37 +130,27 @@ export default function Home() {
       <div className="noise-overlay pointer-events-none fixed inset-0 z-[60] opacity-[0.025]" aria-hidden="true" />
       <Navbar />
 
-      <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28">
-        <div className="absolute inset-0 bg-gradient-radial-accent pointer-events-none" />
-        <div className="absolute -left-32 top-24 h-96 w-96 rounded-full bg-primary/20 blur-3xl animate-orb" />
-        <div className="absolute -right-32 top-1/2 h-[28rem] w-[28rem] rounded-full bg-secondary blur-3xl animate-orb-reverse" />
+      <section className="relative pt-28 pb-16 sm:pt-36 sm:pb-24">
+        <div className="section-tint-soft absolute inset-0 pointer-events-none" />
 
-        <motion.div
-          className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-          variants={stagger}
-          initial="initial"
-          animate="animate"
-        >
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
-            <motion.div
-              variants={fadeInUp}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-4 py-1.5 text-sm font-medium text-muted-foreground backdrop-blur-sm"
-            >
-              <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-              A private place for your life in progress
-            </motion.div>
-
-            <motion.h1
-              variants={fadeInUp}
-              className="mt-8 text-balance text-5xl font-semibold tracking-[-0.03em] sm:text-6xl lg:text-7xl"
-            >
-              Make today{" "}
-              <span className="font-display italic font-normal text-gradient">worth revisiting</span>
-              <span className="text-foreground">.</span>
-            </motion.h1>
+            <h1 className="mt-4 text-balance text-5xl font-semibold tracking-[-0.03em] sm:text-6xl lg:text-7xl">
+              <Letters text="Make today " delay={0.05} />
+              <span className="font-display italic font-normal">
+                <Letters
+                  text="worth revisiting"
+                  delay={0.35}
+                  letterClassName="text-gradient"
+                />
+              </span>
+              <Letters text="." delay={0.85} />
+            </h1>
 
             <motion.p
-              variants={fadeInUp}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
               className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground sm:text-xl"
             >
               Pastel helps you capture the moments that matter, then returns them when they can
@@ -100,26 +158,30 @@ export default function Home() {
             </motion.p>
 
             <motion.div
-              variants={fadeInUp}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
               className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
             >
               <SignedIn>
-                <Button asChild size="lg" className="h-12 px-6 text-base rounded-full shadow-sm">
+                <Button asChild size="lg" className="btn-sweep btn-arrow h-12 rounded-full px-6 text-base shadow-sm">
                   <Link href="/dashboard">Open your space <ArrowRight className="h-4 w-4" /></Link>
                 </Button>
               </SignedIn>
               <SignedOut>
-                <Button asChild size="lg" className="h-12 px-6 text-base rounded-full shadow-sm">
+                <Button asChild size="lg" className="btn-sweep btn-arrow h-12 rounded-full px-6 text-base shadow-sm">
                   <Link href="/dashboard">Start writing for free <ArrowRight className="h-4 w-4" /></Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="h-12 px-5 text-base rounded-full">
-                  <Link href="#how-it-works"><Play className="h-4 w-4" /> See how it works</Link>
-                </Button>
+                <Link href="#how-it-works" className="text-link pl-2 text-base font-medium">
+                  See how it works
+                </Link>
               </SignedOut>
             </motion.div>
 
             <motion.div
-              variants={fadeInUp}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
               className="mt-6 flex items-center justify-center gap-6 text-sm text-muted-foreground"
             >
               <span className="inline-flex items-center gap-1.5">
@@ -134,43 +196,13 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <motion.div variants={fadeInUp} className="relative mx-auto mt-20 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.15, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mx-auto mt-20 max-w-6xl"
+          >
             <div className="absolute -inset-x-8 top-1/2 h-40 -translate-y-1/2 rounded-full bg-primary/15 blur-3xl" />
-
-            <div className="hidden lg:block absolute -left-10 top-16 z-10 animate-float">
-              <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-3 shadow-xl">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <DeliveryIcon className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-foreground">Your memory arrived</p>
-                  <p className="text-[11px] text-muted-foreground">From exactly one year ago</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="hidden lg:block absolute -right-10 bottom-14 z-10 animate-float [animation-delay:1.5s]">
-              <div className="rounded-2xl border border-border bg-card p-4 shadow-xl">
-                <div className="flex items-center justify-between gap-6">
-                  <div>
-                    <p className="text-[11px] font-medium text-muted-foreground">Emotional balance</p>
-                    <p className="mt-1 text-lg font-bold text-foreground">Calm &amp; growing</p>
-                  </div>
-                  <div className="flex h-10 items-end gap-1">
-                    <div className="w-1.5 rounded-full bg-primary/30" style={{ height: "35%" }} />
-                    <div className="w-1.5 rounded-full bg-primary/40" style={{ height: "55%" }} />
-                    <div className="w-1.5 rounded-full bg-primary/60" style={{ height: "45%" }} />
-                    <div className="w-1.5 rounded-full bg-primary/80" style={{ height: "75%" }} />
-                    <div className="w-1.5 rounded-full bg-primary" style={{ height: "90%" }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="hidden sm:flex absolute -top-6 right-16 z-10 items-center gap-2 rounded-full border border-border bg-card px-4 py-2 shadow-lg animate-float [animation-delay:3s]">
-              <ScheduleIcon className="h-4 w-4 text-primary" />
-              <span className="text-xs font-semibold text-foreground">12 letters saved</span>
-            </div>
 
             <div className="relative rounded-3xl bg-gradient-to-b from-border to-transparent p-px shadow-2xl">
               <div className="rounded-3xl bg-background p-2">
@@ -203,7 +235,41 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
-        </motion.div>
+
+          <div className="mx-auto mt-16 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {quickActions.map(({ icon: Icon, title, description, href, image, alt }, index) => (
+              <motion.a
+                key={title}
+                href={href}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.2 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card card-hover"
+              >
+                <div className="relative h-32 overflow-hidden">
+                  <Image
+                    src={image}
+                    alt={alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+                  <div className="absolute bottom-3 left-3 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/90 text-primary-foreground ring-1 ring-white/20 shadow-sm">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                </div>
+                <div className="flex flex-1 items-start gap-3 p-4 pt-3">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-foreground">{title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+                  </div>
+                  <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
       </section>
 
       <MarqueeTicker />
@@ -219,11 +285,7 @@ export default function Home() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-primary">
-            <span className="h-px w-8 bg-primary/40" />
-            Your first letter
-            <span className="h-px w-8 bg-primary/40" />
-          </span>
+          <span className="eyebrow">Your first letter</span>
           <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
             Leave something meaningful for{" "}
             <span className="font-display italic font-normal text-gradient">future you</span>.
@@ -241,29 +303,26 @@ export default function Home() {
       <Pricing />
       <FAQ />
 
-      <section className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-[hsl(var(--primary))] to-foreground px-6 py-16 text-center shadow-xl sm:py-24">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <div className="relative overflow-hidden rounded-3xl section-tint px-6 py-16 text-center shadow-xl sm:py-24">
           <div className="absolute inset-0 bg-grid opacity-[0.05]" />
           <div className="noise-overlay absolute inset-0 opacity-[0.04]" aria-hidden="true" />
-          <div className="absolute inset-y-0 left-0 w-1/3 animate-sheen bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-foreground/20 blur-3xl" />
+          <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-primary/15 blur-3xl" />
+          <div className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-primary/15 blur-3xl" />
 
           <div className="relative">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90 backdrop-blur-sm">
-              Your story is already happening
-            </span>
-            <h2 className="mt-6 text-balance text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+            <span className="eyebrow">Your story is already happening</span>
+            <h2 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
               Give it a{" "}
               <span className="font-display italic font-normal">place to live</span>.
             </h2>
-            <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-white/75">
+            <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-muted-foreground">
               Start with one thought. Future you will be glad you did.
             </p>
             <Button
               asChild
               size="lg"
-              className="mt-8 h-12 bg-white px-6 text-base text-zinc-900 hover:bg-white/90 rounded-full shadow-sm"
+              className="btn-sweep btn-arrow mt-8 h-12 rounded-full px-6 text-base shadow-sm"
             >
               <Link href="/dashboard">
                 Create your first memory <ArrowRight className="h-4 w-4" />
