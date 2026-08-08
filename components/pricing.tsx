@@ -59,11 +59,7 @@ export default function Pricing() {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <span className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-primary">
-          <span className="h-px w-8 bg-primary/40" />
-          Simple pricing
-          <span className="h-px w-8 bg-primary/40" />
-        </span>
+        <span className="eyebrow">Simple pricing</span>
         <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
           Choose{" "}
           <span className="font-display italic font-normal text-gradient">your journey</span>.

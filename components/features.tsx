@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import {
   DeliveryIcon,
   ReflectionsIcon,
@@ -33,7 +34,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="scroll-mt-24 border-y border-border bg-muted/30">
+    <section id="features" className="section-tint-soft scroll-mt-24 border-y border-border">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
           <motion.div
@@ -43,10 +44,7 @@ export default function Features() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em] text-primary">
-              <span className="h-px w-8 bg-primary/40" />
-              Built for the long view
-            </span>
+            <span className="eyebrow">Built for the long view</span>
             <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
               A journal that{" "}
               <span className="font-display italic font-normal text-gradient">
@@ -72,6 +70,28 @@ export default function Features() {
           </motion.div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
+            <motion.div
+              className="relative overflow-hidden rounded-2xl sm:col-span-2 min-h-[180px]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1200&q=80"
+                alt="A shelf of journals and books waiting to be revisited"
+                fill
+                sizes="(max-width: 768px) 100vw, 58vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
+              <div className="relative flex h-full flex-col justify-end p-6">
+                <p className="font-display text-2xl italic text-white">
+                  &ldquo;Every memory you save becomes a letter you&apos;ll be happy to open.&rdquo;
+                </p>
+                <p className="mt-2 text-sm text-white/80">A note for future you</p>
+              </div>
+            </motion.div>
             {features.map(({ icon: Icon, title, description }, index) => (
               <motion.article
                 key={title}
